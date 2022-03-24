@@ -1,0 +1,64 @@
+{
+  "name": "semester_work",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "be": "node bin/be",
+    "start": "node bin/be",
+    "perftest": "node perftest/nodeMain.mjs",
+    "watchFront": "webpack --watch --config ./webpack.front.config.js",
+    "watchBack": "webpack --watch --config ./webpack.back.config.js",
+    "build": "webpack --config ./webpack.back.config.js & webpack --config ./webpack.front.config.js",
+    "watch": "webpack --watch --config ./webpack.back.config.js & webpack --watch --config ./webpack.front.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neuvimat/semestral_project.git"
+  },
+  "author": "neuvimat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neuvimat/semestral_project/issues"
+  },
+  "homepage": "https://github.com/neuvimat/semestral_project#readme",
+  "dependencies": {
+    "assert": "^2.0.0",
+    "borc": "^3.0.0",
+    "bson": "^4.6.1",
+    "bson-ext": "^4.0.2",
+    "cbor": "^8.1.0",
+    "cbor-js": "^0.1.0",
+    "cbor-web": "^8.1.0",
+    "cbor-x": "^0.9.4",
+    "cookie-parser": "^1.4.6",
+    "crypto-browserify": "^3.12.0",
+    "debug": "^4.3.3",
+    "express": "^4.17.2",
+    "ifdef-loader": "^2.3.2",
+    "less-middleware": "^3.1.0",
+    "lodash": "^4.17.21",
+    "messagepack": "^1.1.12",
+    "morgan": "^1.10.0",
+    "msgpack-js": "^0.3.0",
+    "msgpack-lite": "^0.1.26",
+    "msgpack5": "^5.3.2",
+    "msgpackr": "^1.5.2",
+    "process": "^0.11.10",
+    "simple-peer": "^9.11.0",
+    "socket.io": "^4.4.1",
+    "source-map-support": "^0.5.21",
+    "stream-browserify": "^3.0.0",
+    "twig": "^1.15.4",
+    "uninstall": "^0.0.0",
+    "util": "^0.12.4",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-node-externals": "^3.0.0",
+    "wrtc": "^0.4.7",
+    "ws": "^8.4.0"
+  },
+  "devDependencies": {
+    "http-errors": "^2.0.0"
+  }
+}
