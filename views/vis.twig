@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ title }}</title>
+        <style>
+            * {box-sizing: border-box}
+            body {margin: 0}
+            .row {display: flex; flex-flow: row}
+            #wrapper {display: flex; flex-flow: column; height: 100vh; width: 100vw}
+            #statusbar {background-color: yellow; flex: 0 0 32px; display: flex}
+            #statusbar > div {flex: 1 1 auto}
+            #state-wrapper {display: flex; flex-flow: column; flex: 1 1 65%; overflow: auto}
+            #history {flex: 1 0 35%; min-width: 150px; background-color: wheat; padding: 0 .4em; overflow: auto}
+            #state {flex: 1 1 auto; white-space: pre; overflow: auto}
+            #prompt-wrapper {flex: 0 0 32px; background-color: pink; display: flex}
+            #prompt-wrapper > input {flex: 5 1 auto}
+            #prompt-wrapper > button {flex: 1 1 auto; max-width: 120px}
+            #stuff {flex: 1 1 auto; overflow: auto}
+
+            .history {}
+            .history .header {display: flex}
+            .history .header .headerL {flex: 1 1 auto}
+            .history .header .headerR {flex: 1 1 auto; text-align: left}
+            .history .content {display: none}
+
+            .pre {white-space: pre}
+        </style>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div class="row" id="stuff">
+                <div id="state-wrapper">
+                    <div id="state"></div>
+                    <div id="prompt-wrapper">
+                        <input type="text" id="prompt">
+                        <button id="promptSubmit">Evaluate</button>
+                    </div>
+                </div>
+                <div id="history"></div>
+            </div>
+            <div id="statusbar">
+                <div id="statusBarTotal">a</div>
+                <div id="statusBarFull">b</div>
+                <div id="statusBarDelta">c</div>
+                <div id="statusBarFullMP">d</div>
+                <div id="statusBarDeltaMP">e</div>
+            </div>
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="./js/Vis.bundle.js"></script>
+    </body>
+</html>

@@ -3,6 +3,7 @@ import {app} from "./app";
 import {Server} from 'socket.io'
 
 // More boilerplate code to make the http server and socket.io run
+// Returns the http server and socket io
 
 let server;
 

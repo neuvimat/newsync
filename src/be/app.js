@@ -8,6 +8,8 @@ import twig from "twig";
 import indexRouter from "./routes/index";
 
 // Nothing but Express boilerplate here
+// Sets up the app and injects all the basic express stuff
+// Also injects routes/index
 
 export let app = express();
 

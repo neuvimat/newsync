@@ -38,9 +38,9 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.mjs'],
         alias: {
-            Lib: path.resolve(__dirname, './lib/'),
-            BE: path.resolve(__dirname, './src/be/'),
-            FE: path.resolve(__dirname, './src/fe/'),
+            Lib: path.resolve(__dirname, '/lib/'),
+            BE: path.resolve(__dirname, '/src/be/'),
+            FE: path.resolve(__dirname, '/src/fe/'),
         }
     },
     node: {

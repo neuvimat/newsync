@@ -25,6 +25,8 @@ module.exports = {
   },
   entry: {
     Client: './src/fe/main.js',
+    Playground: './src/fe/MainPlayground.js',
+    Vis: './src/fe/MainVis.js',
     BrowserPerftest: './perftest/browserMain.js',
   },
   output: {
