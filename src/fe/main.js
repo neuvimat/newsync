@@ -1,19 +1,19 @@
 import {pack, unpack} from "msgpackr";
 import {LongKeyDictionary} from "@Lib/shared/LongKeyDictionary";
-import {NeuSyncServer} from "@Lib/server/NeuSyncServer";
+import {NewSyncServer} from "@Lib/server/NewSyncServer";
 import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 
 
 const ws = new WebSocket('ws://localhost:8080');
 ws.binaryType = "arraybuffer"
-const neuSync = new NeuSyncServer(new WebSocketDriverServer('$'), new MessagePackCoder())
+const newSync = new NewSyncServer(new WebSocketDriverServer('$'), new MessagePackCoder())
 
 ws.onopen = (event) =>{
   console.log(event);
 }
 ws.onmessage = (message)=>{
-  const frameworkMessage = neuSync.isFrameworkMessage(message.data)
+  const frameworkMessage = newSync.isFrameworkMessage(message.data)
   if (frameworkMessage) {
     const array = new Uint8Array(message.data.slice(1))
     const obj = unpack(array)

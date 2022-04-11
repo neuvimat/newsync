@@ -3,7 +3,7 @@ import {makeSimpleRecursiveProxy} from "@Lib/shared/SimpleProxy";
 import {clear} from "@Lib/objUtil";
 import {WebRTCHandler} from "./webrtcHandler";
 import {createSimulation} from "./model/CreateSimulation";
-import {NeuSyncServer} from "@Lib/server/NeuSyncServer";
+import {NewSyncServer} from "@Lib/server/NewSyncServer";
 import {SimpleContainer} from "@Lib/client/container/SimpleContainer";
 import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
@@ -15,26 +15,24 @@ const commType = 0
 // Create the server and socket.io
 const [server, io, wss] = createServer(8080); // Express and socket.io boilerplate
 
-// ON (BUFFER, false?)
-// ON MESSAGE (MESSAGE EVENT, )
 
-const neuSync = new NeuSyncServer(new WebSocketDriverServer('$'), new MessagePackCoder())
-const container = neuSync.addContainer('mySuperContainer', new SimpleContainer())
-neuSync.enableAutoSync()
+const newSync = new NewSyncServer(new WebSocketDriverServer('$'), new MessagePackCoder())
+const container = newSync.addContainer('mySuperContainer', new SimpleContainer())
+newSync.enableAutoSync()
 
 wss.on('connection', (socket, request) => {
-  const client = neuSync.addClient(socket)
-  neuSync.fullUpdate(client)
+  const client = newSync.addClient(socket)
+  newSync.fullUpdate(client)
   socket.on('message', (message, isBinary) => {
-    if (isBinary && neuSync.handleIfFrameworkMessage(message)) {return}
+    if (isBinary && newSync.handleIfFrameworkMessage(message)) {return}
     // My Code
     console.log('Not a NeySync message:', message.toString());
   })
   socket.on('close', () => {
-    neuSync.removeClient(socket)
+    newSync.removeClient(socket)
   })
   socket.on('error', (error) => {
-    neuSync.removeClient(socket)
+    newSync.removeClient(socket)
   })
 })
 

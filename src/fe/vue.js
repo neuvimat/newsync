@@ -5,7 +5,7 @@ import store from './store'
 import {pack, unpack} from "msgpackr";
 import {LongKeyDictionary} from "@Lib/shared/LongKeyDictionary";
 import {makeSimpleRecursiveProxy} from "@Lib/shared/SimpleProxy";
-import {NeuSyncServer} from "@Lib/server/NeuSyncServer";
+import {NewSyncServer} from "@Lib/server/NewSyncServer";
 import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 
@@ -16,7 +16,7 @@ new Vue({
   store,
   render: function (h) { return h(App) }
 }).$mount('#app')
-const server = new NeuSyncServer(new WebSocketDriverServer(), new MessagePackCoder())
+const server = new NewSyncServer(new WebSocketDriverServer(), new MessagePackCoder())
 const {proxy, pristine, changes} = makeSimpleRecursiveProxy()
 window.d = new LongKeyDictionary()
 window.p = proxy
