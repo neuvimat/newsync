@@ -5,9 +5,12 @@ module.exports = {
     config
       .entry("app")
       .clear()
-      .add("./src/fe/mainVUE.js")
+      .add("./src/fe/vue.js")
       .end();
     config.resolve.alias
       .set("@", path.join(__dirname, "./src/fe"))
+      .set("@Lib", path.join(__dirname, "./lib"))
+      .set("@FE", path.join(__dirname, "./src/fe"))
+      .set('@BE', path.join(__dirname, "./src/be"))
   }
 };
