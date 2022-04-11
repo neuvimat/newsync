@@ -47,6 +47,7 @@
     "process": "^0.11.10",
     "simple-peer": "^9.11.0",
     "socket.io": "^4.4.1",
+    "source-map": "^0.7.3",
     "source-map-support": "^0.5.21",
     "stream-browserify": "^3.0.0",
     "twig": "^1.15.4",
@@ -56,9 +57,11 @@
     "webpack-cli": "^4.9.1",
     "webpack-node-externals": "^3.0.0",
     "wrtc": "^0.4.7",
-    "ws": "^8.4.0"
+    "ws": "^8.5.0"
   },
   "devDependencies": {
-    "http-errors": "^2.0.0"
+    "http-errors": "^2.0.0",
+    "nodemon-webpack-plugin": "^4.7.1",
+    "source-map-loader": "^3.0.1"
   }
 }

@@ -1,6 +1,7 @@
 // const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const NodemonPlugin = require("nodemon-webpack-plugin");
 // const cleanPlugin = require('clean-webpack-plugin');
 
 // const preprocessor = {
@@ -20,7 +21,12 @@ module.exports = {
                 // use: {
                 //     // loader: `ifdef-loader?${ifdef_query}`,
                 // },
-            }
+            },
+            {
+                test: /\.js$/,
+                enforce: "pre",
+                use: ["source-map-loader"],
+            },
         ]
     },
     target: 'node',
@@ -32,15 +38,12 @@ module.exports = {
         filename: '[name].js',
         path: path.resolve(__dirname, './bin')
     },
-    // plugins: [
-        // new cleanPlugin(['public/javascripts/*']),
-    // ],
     resolve: {
         extensions: ['.js', '.mjs'],
         alias: {
-            Lib: path.resolve(__dirname, '/lib/'),
-            BE: path.resolve(__dirname, '/src/be/'),
-            FE: path.resolve(__dirname, '/src/fe/'),
+            '@Lib': path.resolve(__dirname, 'lib/'),
+            '@BE': path.resolve(__dirname, 'src/be/'),
+            '@FE': path.resolve(__dirname, 'src/fe/'),
         }
     },
     node: {
@@ -51,4 +54,7 @@ module.exports = {
     },
     externals: [nodeExternals()],
     devtool: "inline-source-map",
+    plugins: [
+        new NodemonPlugin(),
+    ]
 };

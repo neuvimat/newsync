@@ -41,9 +41,9 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      Lib: path.resolve(__dirname, './lib/'),
-      BE: path.resolve(__dirname, './src/be/'),
-      FE: path.resolve(__dirname, './src/fe/'),
+      '@Lib': path.resolve(__dirname, 'lib/'),
+      '@BE': path.resolve(__dirname, 'src/be/'),
+      '@FE': path.resolve(__dirname, 'src/fe/'),
     },
     fallback: {
       "stream": require.resolve("stream-browserify"),

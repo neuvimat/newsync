@@ -1,4 +1,4 @@
-import {makeRecursiveProxy} from "../../lib/proxymaker";
+import {makeSimpleRecursiveProxy} from "../../lib/shared/SimpleProxy";
 import {clear} from "../../lib/objUtil";
 
 const proxyE = document.getElementById('proxy');
@@ -6,7 +6,7 @@ const simE = document.getElementById('sim');
 const changesE = document.getElementById('changes');
 const clearE = document.getElementById('clear');
 
-const {changes, pristine, proxy} = makeRecursiveProxy()
+const {changes, pristine, proxy} = makeSimpleRecursiveProxy()
 
 const iters = 1
 const perIter = 10_000_000

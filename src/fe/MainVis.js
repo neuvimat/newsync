@@ -1,6 +1,6 @@
 import {UI} from "./UI";
 import {Receiver} from "./receiver";
-import {makeRecursiveProxy} from "../../lib/proxymaker";
+import {makeSimpleRecursiveProxy} from "../../lib/shared/SimpleProxy";
 import * as objUtils from '../../lib/objUtil'
 import {Random} from "../../lib/random";
 import {ClientState} from "./ClientState";
@@ -16,7 +16,7 @@ const config = {
   ]
 };
 
-const {pristine, proxy, changes} = makeRecursiveProxy() // Create the automatic state detector
+const {pristine, proxy, changes} = makeSimpleRecursiveProxy() // Create the automatic state detector
 const clientState = new ClientState(pristine, proxy, changes) // Manager of local state
 const ui = new UI() // UI rendering methods
 const receiver = new Receiver(ui, clientState); // WebRTC message handler

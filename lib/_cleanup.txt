@@ -1,0 +1,5 @@
+websocket driver might not need wss ever
+lzw compression? (algorithm behind gzip)
+send only required dictionary keys??
+add versioning to containers / dictionary, instead of checking whether changes has Object.keys().length > 0
+caching msgpack messages

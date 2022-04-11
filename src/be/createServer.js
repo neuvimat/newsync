@@ -1,6 +1,7 @@
 import * as http from 'http'
 import {app} from "./app";
 import {Server} from 'socket.io'
+import {WebSocketServer} from "ws";
 
 // More boilerplate code to make the http server and socket.io run
 // Returns the http server and socket io
@@ -13,11 +14,12 @@ export default function makeServer(_port) {
 
   server = http.createServer(app);
   const io = new Server(server)
+  const wss = new WebSocketServer({server: server})
 
   server.on('error', onError);
   server.on('listening', onListening);
 
-  return [server, io]
+  return [server, io, wss]
 }
 
 function normalizePort(val) {
