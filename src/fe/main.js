@@ -28,7 +28,6 @@ ws.onmessage = (message)=>{
 }
 
 newSyncClient.addEventListener('sync', (event)=>{
-  console.log('event caught');
   div.innerHTML = JSON.stringify(event.state)
   changes.innerHTML = JSON.stringify(event.changes)
 })
