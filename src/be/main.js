@@ -9,6 +9,7 @@ import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 
 import 'source-map-support/register'
+import {LongKeyDictionaryServer} from "@Lib/shared/LongKeyDictionaryServer";
 
 const commType = 0
 
@@ -16,7 +17,7 @@ const commType = 0
 const [server, io, wss] = createServer(8080); // Express and socket.io boilerplate
 
 
-const newSync = new NewSyncServer(new WebSocketDriverServer('$'), new MessagePackCoder())
+const newSync = new NewSyncServer(new WebSocketDriverServer('$'), new MessagePackCoder(), new LongKeyDictionaryServer())
 const container = newSync.addContainer('mySuperContainer', new SimpleContainer())
 newSync.enableAutoSync()
 
@@ -25,12 +26,13 @@ wss.on('connection', (socket, request) => {
   newSync.fullUpdate(client)
   socket.on('message', (message, isBinary) => {
     if (isBinary && newSync.handleIfFrameworkMessage(message)) {return}
-    // My Code
-    console.log('Not a NeySync message:', message.toString());
+    console.log('Not a NewSync message, run your own code here:', message.toString());
   })
+
   socket.on('close', () => {
     newSync.removeClient(socket)
   })
+
   socket.on('error', (error) => {
     newSync.removeClient(socket)
   })
@@ -40,7 +42,9 @@ wss.on('connection', (socket, request) => {
 createSimulation(container.proxy, 4, 12)
 // when user connects
 container.proxy.randomData = {}
-setInterval(() => { container.proxy.randomData.a = Math.random() }, 5000)
+setInterval(() => {
+  container.proxy.randomData.a = Math.random()
+}, 5000)
 
 // Create the handler that does all the hard work
 // const rtc = new WebRTCHandler(io, sim, pristine, changes, 1000, {HOSPITALS_NUM: 4, AMBULANCE_NUM: 12})
