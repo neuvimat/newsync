@@ -24,7 +24,7 @@ module.exports = {
     ]
   },
   entry: {
-    Client: './src/fe/main.js',
+    // Client: './src/fe/main.js',
     Playground: './src/fe/MainPlayground.js',
     Vis: './src/fe/MainVis.js',
     BrowserPerftest: './perftest/browserMain.js',
@@ -44,6 +44,7 @@ module.exports = {
       '@Lib': path.resolve(__dirname, 'lib/'),
       '@BE': path.resolve(__dirname, 'src/be/'),
       '@FE': path.resolve(__dirname, 'src/fe/'),
+      '@': path.resolve(__dirname, 'src/fe/')
     },
     fallback: {
       "stream": require.resolve("stream-browserify"),
