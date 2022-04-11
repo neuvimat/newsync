@@ -14,7 +14,9 @@
     "start": "node bin/be",
     "watch": "webpack --watch --config ./webpack.back.config.js & webpack --watch --config ./webpack.front.config.js",
     "watchBack": "webpack --watch --config ./webpack.back.config.js",
-    "watchFront": "webpack --watch --config ./webpack.front.config.js"
+    "watchFront": "webpack --watch --config ./webpack.front.config.js",
+    "watchTest": "webpack --watch --config ./webpack.test.config.js",
+    "test": "webpack --config ./webpack.test.config.js && mocha"
   },
   "main": "index.js",
   "dependencies": {
@@ -30,10 +32,12 @@
     "crypto-browserify": "^3.12.0",
     "debug": "^4.3.3",
     "express": "^4.17.2",
+    "glob": "^7.2.0",
     "ifdef-loader": "^2.3.2",
     "less-middleware": "^3.1.0",
     "lodash": "^4.17.21",
     "messagepack": "^1.1.12",
+    "mocha": "^9.2.2",
     "morgan": "^1.10.0",
     "msgpack-js": "^0.3.0",
     "msgpack-lite": "^0.1.26",

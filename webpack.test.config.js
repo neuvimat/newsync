@@ -1,15 +1,8 @@
 // const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack')
-// const cleanPlugin = require('clean-webpack-plugin');
 
-// const preprocessor = {
-//     DEBUG: true,
-//     SERVER: false,
-//     CLIENT: true
-// };
-//
-// const ifdef_query = require('querystring').encode(preprocessor);
+let glob = require("glob");
 
 module.exports = {
   module: {
@@ -23,15 +16,15 @@ module.exports = {
       }
     ]
   },
-  entry: {
-    Client: './src/fe/main.js',
-    Playground: './src/fe/MainPlayground.js',
-    Vis: './src/fe/MainVis.js',
-    BrowserPerftest: './perftest/browserMain.js',
-  },
+  entry: glob.sync("./test_src/*.js").reduce((prev, current)=>{
+    const split = current.split('/')
+    const filename = split[split.length-1]
+    prev[filename] = current
+    return prev
+  }, {}),
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, './dist/js/')
+    filename: '[name]',
+    path: path.resolve(__dirname, './test/')
   },
   plugins: [
     // new cleanPlugin(['public/javascripts/*']),

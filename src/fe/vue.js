@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import {pack, unpack} from "msgpackr";
-import {LongKeyDictionary} from "@Lib/shared/LongKeyDictionary";
+import {LongKeyDictionaryServer} from "@Lib/shared/LongKeyDictionaryServer";
 import {makeSimpleRecursiveProxy} from "@Lib/shared/SimpleProxy";
 import {NewSyncServer} from "@Lib/server/NewSyncServer";
 import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
@@ -18,7 +18,7 @@ new Vue({
 }).$mount('#app')
 const server = new NewSyncServer(new WebSocketDriverServer(), new MessagePackCoder())
 const {proxy, pristine, changes} = makeSimpleRecursiveProxy()
-window.d = new LongKeyDictionary()
+window.d = new LongKeyDictionaryServer()
 window.p = proxy
 window.c = pristine
 window.g = changes
