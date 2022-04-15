@@ -38,7 +38,7 @@ let newSync = null
 //   })
 //
 //   socket.on('close', () => {
-//     newSync.removeClient(socket)
+//     newSync.removeClient(client.id)
 //   })
 //
 //   socket.on('error', (error) => {
