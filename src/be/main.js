@@ -54,9 +54,10 @@ newSync = new NewSyncServer(new RtcDriverServer(), new MessagePackCoder(), new L
 io.on('connection', (socket)=>{
   let peerConnection = new rtc.RTCPeerConnection(rtcConfig)
   const dc = peerConnection.createDataChannel('NewSync', {})
+  let client = null
 
   dc.onopen = ev => {
-    const client = newSync.addClient(peerConnection, dc)
+    client = newSync.addClient(peerConnection, dc)
     console.log('sent full update');
     newSync.fullUpdate(client)
     newSync.driver.sendToAllLowPrio()
@@ -86,7 +87,8 @@ io.on('connection', (socket)=>{
 
   // When the other (client) side disconnected from the socket IO
   socket.on("disconnect", () => {
-    // newSync.removeClient(dc, rtcPeer)
+    console.log('removing client');
+    newSync.removeClient(client.id)
   });
 
   // Client received our offer and responded with information about themselves
