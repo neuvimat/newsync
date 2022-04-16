@@ -57,13 +57,12 @@ io.on('connection', (socket)=>{
   let client = null
 
   dc.onopen = ev => {
-    client = newSync.addClient(peerConnection, dc)
     console.log('sent full update');
+    client = newSync.addClient(peerConnection, dc)
     newSync.fullUpdate(client)
-    newSync.driver.sendToAllLowPrio()
   }
   dc.onmessage = msg => {
-    console.log('Received data from client, hanxdling');
+    console.log('Received data from client, handling');
     // newSync.handleIfFrameworkMessage(msg)
   }
 
@@ -81,13 +80,11 @@ io.on('connection', (socket)=>{
       peerConnection.setLocalDescription(sdp)
     })
     .then(() => {
-      console.log('sending offer');
       socket.emit("offer", peerConnection.localDescription);
     });
 
   // When the other (client) side disconnected from the socket IO
   socket.on("disconnect", () => {
-    console.log('removing client');
     newSync.removeClient(client.id)
   });
 
@@ -112,7 +109,7 @@ newSync.enableAutoSync()
 createSimulation(container.proxy, 4, 12)
 container.proxy.randomData = {a: 0}
 setInterval(() => {
-  container.proxy.randomData.$low.set('lowPrioKey', Math.random()).getLowPrioChanges()
+  container.proxy.randomData.$low.set('why is it there?', Math.random()).getLowPrioChanges()
 }, 1500)
 setInterval(() => {
   container.proxy.randomData.a++

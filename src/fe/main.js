@@ -2,12 +2,9 @@ import {pack, Packr, unpack, Unpackr} from "msgpackr";
 import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 import {NewSyncClient} from "@Lib/client/NewSyncClient";
-import {SocketIOSignallerClient} from "@Lib/server/signallers/SocketIOSignallerClient";
-import ArrayProxy from "@Lib/client/ArrayProxy";
-import {Arr} from "messagepack";
 import rtcConfig from '../be/webrtcConfig'
-import {WebSocketDriverClient} from "@Lib/client/drivers/WebSocketDriverClient";
 import {RtcDriverClient} from "@Lib/client/drivers/RtcDriverClient";
+import {KEYWORDS_TO} from "@Lib/shared/SYMBOLS";
 
 let h1 = document.createElement('h1');
 h1.innerHTML = 'Current state'
@@ -64,12 +61,13 @@ socket.on("offer", (description) => {
     });
 
   peerConnection.ondatachannel = event => {
+    console.log('New channel made with label', event.channel.label);
+    if (event.channel.label === 'NewSyncLowPrio') {
+      event.channel.send('x')
+    }
     event.channel.binaryType = 'arraybuffer'
     event.channel.onmessage = (msg) => {
-      console.log('msg', msg);
-      console.log('msg.data', msg.data);
       newSyncClient.handleIfFrameworkMessage(msg.data)
-      console.log('got message in channel');
     }
   };
 
@@ -99,6 +97,9 @@ window.onunload = window.onbeforeunload = () => {
 newSyncClient.addEventListener('sync', (event)=>{
   div.innerHTML = JSON.stringify(event.state)
   changes.innerHTML = JSON.stringify(event.changes)
+})
+newSyncClient.addEventListener('syncLowPrio', (event)=>{
+  console.log('low prio message:', event);
 })
 
 // ArrayProxy()

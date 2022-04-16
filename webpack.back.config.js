@@ -33,6 +33,7 @@ module.exports = {
     mode: 'none',
     entry: {
         be: './src/be/main.js',
+        scratchPad: './src/be/scratchPad.js',
     },
     output: {
         filename: '[name].js',
@@ -56,6 +57,6 @@ module.exports = {
     externals: [nodeExternals()],
     devtool: "inline-source-map",
     plugins: [
-        new NodemonPlugin(),
+        new NodemonPlugin({nodeArgs: ['--inspect']}),
     ]
 };
