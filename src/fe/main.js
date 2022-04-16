@@ -4,7 +4,7 @@ import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 import {NewSyncClient} from "@Lib/client/NewSyncClient";
 import rtcConfig from '../be/webrtcConfig'
 import {RtcDriverClient} from "@Lib/client/drivers/RtcDriverClient";
-import {KEYWORDS_TO} from "@Lib/shared/SYMBOLS";
+import {KEYWORDS} from "@Lib/shared/SYMBOLS";
 
 let h1 = document.createElement('h1');
 h1.innerHTML = 'Current state'
@@ -63,7 +63,11 @@ socket.on("offer", (description) => {
   peerConnection.ondatachannel = event => {
     console.log('New channel made with label', event.channel.label);
     if (event.channel.label === 'NewSyncLowPrio') {
-      event.channel.send('x')
+      event.channel.send('x') // ping the server that the channel is open due to wrtc node.js bug
+    }
+    else if (event.channel.label === 'NewSync') {
+      newSyncClient.setConnection(peerConnection, event.channel)
+      newSyncClient.autosync(true)
     }
     event.channel.binaryType = 'arraybuffer'
     event.channel.onmessage = (msg) => {
@@ -101,5 +105,18 @@ newSyncClient.addEventListener('sync', (event)=>{
 newSyncClient.addEventListener('syncLowPrio', (event)=>{
   console.log('low prio message:', event);
 })
+
+// const main = {}
+// const a = {a: 40, b: 15, c:'lolec'}
+// const b = {xasd: 'adaw', asddas: 9999, ugnaikg: 'asdniasdn'}
+// main.a = a
+// main.b = b
+// const mainP = pack(main)
+// const mainN = pack({a: pack(a), b: pack(b)})
+// console.log(mainP.length)
+// console.log(mainN.length);
+// console.log(unpack(mainP));
+// console.log(unpack(mainN));
+
 
 // ArrayProxy()

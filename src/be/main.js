@@ -8,13 +8,10 @@ import {proxyKey} from "@Lib/shared/SimpleProxy";
 import {createSimulation} from "./model/CreateSimulation";
 import {NewSyncServer} from "@Lib/server/NewSyncServer";
 import {SimpleContainer} from "@Lib/client/container/SimpleContainer";
-import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 
 import 'source-map-support/register'
 import {LongKeyDictionaryServer} from "@Lib/shared/LongKeyDictionaryServer";
-import {SocketIOSignallerServer} from "@Lib/server/signallers/SocketIOSignallerServer";
-import {clear} from "@Lib/objUtil";
 import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
 
 const commType = 0
@@ -62,8 +59,7 @@ io.on('connection', (socket)=>{
     newSync.fullUpdate(client)
   }
   dc.onmessage = msg => {
-    console.log('Received data from client, handling');
-    // newSync.handleIfFrameworkMessage(msg)
+    newSync.handleIfFrameworkMessage(msg.data, client)
   }
 
   // When the STUN finds a possible route to reach us, forward it to the other side

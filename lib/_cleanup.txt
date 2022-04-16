@@ -24,3 +24,16 @@ caching msgpack messages -- possible but needs more metadata
 
     return {listenerSymbol, attributeSymbol}
   }
+
+ // Test for nested msgpackr messages
+const main = {}
+// const a = {a: 40, b: 15, c:'lolec'}
+// const b = {xasd: 'adaw', asddas: 9999, ugnaikg: 'asdniasdn'}
+// main.a = a
+// main.b = b
+// const mainP = pack(main)
+// const mainN = pack({a: pack(a), b: pack(b)})
+// console.log(mainP.length)
+// console.log(mainN.length);
+// console.log(unpack(mainP));
+// console.log(unpack(mainN));
