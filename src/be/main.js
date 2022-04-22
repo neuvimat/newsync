@@ -14,7 +14,7 @@ import 'source-map-support/register'
 import {LongKeyDictionaryServer} from "@Lib/shared/LongKeyDictionaryServer";
 import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
 
-const commType = 0
+const commType = 1 // useless
 
 // Create the server and socket.io
 const [server, io, wss] = createServer(8080); // Express and socket.io boilerplate
@@ -48,15 +48,19 @@ let newSync = null
 // =============================
 newSync = new NewSyncServer(new RtcDriverServer(), new MessagePackCoder(), new LongKeyDictionaryServer())
 
-io.on('connection', (socket)=>{
+io.on('connection', (socket) => {
   let peerConnection = new rtc.RTCPeerConnection(rtcConfig)
   const dc = peerConnection.createDataChannel('NewSync', {})
   let client = null
 
   dc.onopen = ev => {
-    console.log('sent full update');
     client = newSync.addClient(peerConnection, dc)
-    newSync.fullUpdate(client)
+    newSync.on('custom2', (a, b, c) => {
+      console.log('Received event custom2', a, b, c);
+    })
+    newSync.setCustomMessageHandler((message) => {
+      console.log('Handling a custom message in any way client deems worth', message);
+    })
   }
   dc.onmessage = msg => {
     newSync.handleIfFrameworkMessage(msg.data, client)
@@ -105,7 +109,7 @@ newSync.enableAutoSync()
 createSimulation(container.proxy, 4, 12)
 container.proxy.randomData = {a: 0}
 setInterval(() => {
-  container.proxy.randomData.$low.set('why is it there?', Math.random()).getLowPrioChanges()
+  container.proxy.randomData.$low.set('low prio attribute', Math.random()).getLowPrioChanges()
 }, 1500)
 setInterval(() => {
   container.proxy.randomData.a++

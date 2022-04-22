@@ -5,17 +5,28 @@ import {NewSyncClient} from "@Lib/client/NewSyncClient";
 import rtcConfig from '../be/webrtcConfig'
 import {RtcDriverClient} from "@Lib/client/drivers/RtcDriverClient";
 import {KEYWORDS} from "@Lib/shared/SYMBOLS";
+import {COMMANDS} from "@Lib/shared/COMMANDS";
 
 let h1 = document.createElement('h1');
 h1.innerHTML = 'Current state'
 let h2 = document.createElement('h1');
 h2.innerHTML = 'Changes state'
+let h3 = document.createElement('h1');
+h3.innerHTML = 'Last message (raw)'
+let h4 = document.createElement('h1');
+h4.innerHTML = 'Last message'
 let div = document.createElement('div');
-let changes = document.createElement('changes');
+let changes = document.createElement('div');
+let messageRaw = document.createElement('div');
+let message = document.createElement('div');
 document.body.appendChild(h1)
 document.body.appendChild(div)
 document.body.appendChild(h2)
 document.body.appendChild(changes)
+document.body.appendChild(h3)
+document.body.appendChild(messageRaw)
+document.body.appendChild(h4)
+document.body.appendChild(message)
 
 let newSyncClient = null
 
@@ -67,7 +78,8 @@ socket.on("offer", (description) => {
     }
     else if (event.channel.label === 'NewSync') {
       newSyncClient.setConnection(peerConnection, event.channel)
-      newSyncClient.autosync(true)
+      newSyncClient.send({[KEYWORDS.commands]: [COMMANDS.SUBSCRIBE_ALL]})
+      setTimeout(()=>{newSyncClient.send({[KEYWORDS.events]: [['custom2', [1,2],3]]})}, 2000)
     }
     event.channel.binaryType = 'arraybuffer'
     event.channel.onmessage = (msg) => {
@@ -100,7 +112,9 @@ window.onunload = window.onbeforeunload = () => {
 
 newSyncClient.addEventListener('sync', (event)=>{
   div.innerHTML = JSON.stringify(event.state)
-  changes.innerHTML = JSON.stringify(event.changes)
+  changes.innerHTML = JSON.stringify(event.containers)
+  messageRaw.innerHTML = JSON.stringify(event.message)
+  message.innerHTML = JSON.stringify(event.containers)
 })
 newSyncClient.addEventListener('syncLowPrio', (event)=>{
   console.log('low prio message:', event);
