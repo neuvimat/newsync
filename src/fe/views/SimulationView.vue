@@ -1,61 +1,91 @@
 <template>
-  <div class="map">
-    {{zoom}}
-    <LMap
-      :zoom="zoom"
-      :center="center"
-      @update:zoom="zoomUpdated"
-      @update:center="centerUpdated"
-      @update:bounds="boundsUpdated">
-      <LTileLayer
-        :url="`https://zzs.fel.cvut.cz/tiles/{z}/{x}/{y}.png`"
-      ></LTileLayer>
-      <LMarker :lat-lng="[49,18]"></LMarker>
-    </LMap>
+  <div class="simulation-view">
+    <h1>Data simulace</h1>
+    <details class="containers">
+      <summary><h2>Containers</h2></summary>
+      <div class="containers">
+        <template v-for="(v,k) in containers">
+          <div><input type="checkbox" @click="subscribe(k)"><span>{{ k }}</span></div>
+        </template>
+      </div>
+    </details>
+    <details open>
+      <summary><h2>Data</h2></summary>
+      <details open>
+        <summary><h3>Hospitals</h3></summary>
+        <HospitalView v-for="h in hospitals" :ambulances="ambulances" :hospital="h" :show-ambulances="true"/>
+      </details>
+      <details open>
+        <summary><h3>Ambulances</h3></summary>
+        <AmbulanceView v-for="a in ambulances" :ambulance="a" :hospitals="hospitals" :show-hospital="true"/>
+      </details>
+    </details>
+
+    <div v-if="showRawState" class="raw-data">
+      <JsonView :message="$store.state.containers"/>
+    </div>
+    <div class="requests">
+      <h2>Requests</h2>
+      <div class="command send-ambulance">
+        <button>Send ambulance</button>
+        <label>Ambulance ID:<input type="number" min="0" step="1"></label>
+        <label>Target latitude:<input type="number" step="0.01"></label>
+        <label>Target longitude:<input type="number" step="0.01"></label>
+      </div>
+      <div class="command recall-ambulance">
+        <button>Recall ambulance</button>
+        <label>Ambulance ID:<input type="number" min="0" step="1"></label>
+      </div>
+      <div class="command move-number">
+        <button>Make X ambulances moving</button>
+        <label>X:<input type="number" min="0" step="1"></label>
+      </div>
+      <div class="command stop-all">
+        <button>Stop all ambulances</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import {LMap, LTileLayer, LMarker, LIcon} from "vue2-leaflet";
-import 'leaflet/dist/leaflet.css';
-
-import { Icon } from 'leaflet';
-
-delete Icon.Default.prototype._getIconUrl;
-Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-});
-
+import JsonView from "@/fe/components/JsonView";
+import HospitalView from "@/fe/components/HospitalView";
+import AmbulanceView from "@/fe/components/AmbulanceView";
 
 export default {
   name: "SimulationView",
-  components: {LMap, LTileLayer, LMarker, LIcon},
+  components: {AmbulanceView, HospitalView, JsonView},
   data() {
     return {
-      zoom: 12,
-      center: [49, 18]
+      showRawState: false
     }
   },
   methods: {
-    zoomUpdated (zoom) {
-      this.zoom = zoom;
-    },
-    centerUpdated (center) {
-      this.center = center;
-    },
-    boundsUpdated (bounds) {
-      this.bounds = bounds;
+    subscribe(k) {
+
     }
   },
+  props: [],
+  computed: {
+    containers() {
+      return this.$store.state.containers
+    },
+    hospitals() {
+      return this.$store.state.containers.health?.hospitals
+    },
+    ambulances() {
+      return this.$store.state.containers.health?.ambulances
+    },
+  }
 }
 </script>
 
 <style scoped>
-.map {
-  height: 100vh;
-  width: 100vw;
-  /*position: relative;*/
+summary h2, summary h3 {
+  display: inline-block;
+  margin: .25em 0;
+}
+.command > * {
+  margin-right: .5em;
 }
 </style>

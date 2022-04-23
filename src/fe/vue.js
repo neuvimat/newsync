@@ -16,17 +16,3 @@ new Vue({
   store,
   render: function (h) { return h(App) }
 }).$mount('#app')
-
-// const server = new NewSyncServer(new WebSocketDriverServer(), new MessagePackCoder())
-// const {proxy, pristine, changes} = makeSimpleRecursiveProxy()
-// window.d = new LongKeyDictionaryServer()
-// window.p = proxy
-// window.c = pristine
-// window.g = changes
-//
-// proxy.arr = []
-// proxy.arr[0] = 15
-// proxy.arr.push(10)
-// proxy.arr.push(12)
-// console.log(proxy);
-// console.log(changes);

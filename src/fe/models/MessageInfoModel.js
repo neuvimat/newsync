@@ -1,6 +1,7 @@
 import {pack, unpack} from 'msgpackr'
 import {KEYWORDS} from "@Lib/shared/SYMBOLS";
 import {cloneDeep} from "lodash";
+import {byteSize} from "@Lib/format.mjs";
 
 export class MessageInfoModel {
   static encoder = new TextEncoder()
@@ -16,33 +17,32 @@ export class MessageInfoModel {
     this.id = id
     this.time = time
     this.dictionary = dictionary
-    this.doStuff(rawMessage)
+    this.analyzeRawMessage(rawMessage)
   }
 
-  doStuff(rawMessage) {
-    console.log('doing stuff with', rawMessage);
-    const msg = unpack(rawMessage)
-    console.log('unpack succ');
-    if (msg[KEYWORDS.containers]) {
-      for (let c in msg[KEYWORDS.containers]) {
-        msg[KEYWORDS.containers][c] = unpack(msg[KEYWORDS.containers][c])
+   /** @returns {{jsonNoDict, noDict, final, json}} */
+  analyzeRawMessage(rawMessage) {
+    const tmp = unpack(rawMessage)
+    if (tmp[KEYWORDS.containers]) {
+      for (let c in tmp[KEYWORDS.containers]) {
+        tmp[KEYWORDS.containers][c] = unpack(tmp[KEYWORDS.containers][c])
       }
     }
-    const rstrd = this.dictionary.restoreObject(msg)
-    this.message = rstrd
+    const message = this.dictionary.restoreObject(tmp)
+    this.message = message
 
-    this.lengthFinal = rawMessage.length
-    const msgpackrestored = cloneDeep(rstrd)
-    if (msgpackrestored[KEYWORDS.containers]) {
-      for (let c in msgpackrestored[KEYWORDS.containers]) {
-        console.log('c', c);
-        msgpackrestored[KEYWORDS.containers][c] = pack(msgpackrestored[KEYWORDS.containers][c])
+    const msgpackNoDictionary = cloneDeep(message)
+    if (msgpackNoDictionary[KEYWORDS.containers]) {
+      for (let c in msgpackNoDictionary[KEYWORDS.containers]) {
+        msgpackNoDictionary[KEYWORDS.containers][c] = pack(msgpackNoDictionary[KEYWORDS.containers][c])
       }
     }
-    this.lengthNoDict = pack(msgpackrestored).length
-    this.lengthJsonNoDict = MessageInfoModel.encoder.encode(JSON.stringify(rstrd)).length
-    this.lengthJsonDict =   MessageInfoModel.encoder.encode(JSON.stringify(this.dictionary.shortenObject(cloneDeep(rstrd)))).length
 
-    console.log('msgpackrestored', msgpackrestored);
+    this.lengthFinal = byteSize(rawMessage.length)
+    this.lengthNoDict = byteSize(pack(msgpackNoDictionary).length)
+    this.lengthJsonNoDict = byteSize(MessageInfoModel.encoder.encode(JSON.stringify(message)).length)
+    this.lengthJsonDict = byteSize(MessageInfoModel.encoder.encode(JSON.stringify(this.dictionary.shortenObject(message))).length)
+
+    return {final: this.lengthFinal, noDict: this.lengthNoDict, jsonNoDict: this.lengthJsonNoDict, json:this.lengthJsonDict}
   }
 }
