@@ -1,6 +1,7 @@
 <template>
   <div>
     <div :class="{hidden: revealStatus === 0, shown: revealStatus === 1, full: revealStatus === 2}" class="messages">
+      <div class="header">Received messages</div>
       <div class="opener" @click="revealStatus = revealStatus === 0 ? 2 : 0">{{ revealStatus === 0 ? '<' : '>' }}</div>
       <div style="overflow: auto; height: 100%">
         <MessageInfo v-for="message in messages" :message-info="message"/>
@@ -27,17 +28,16 @@ export default {
     }
   },
   mounted() {
-    const raw = pack({a: 400})
-    const dictionary = new FakeLongKeyDictionary()
-    for (let i = 0; i < 10; i++) {
-      const msg = new MessageInfoModel(raw, dictionary, i, new Date())
-      this.$store.state.receivedMessages.push(msg)
-    }
+
   }
 }
 </script>
 
 <style scoped>
+.header {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
 .opener {
   border-radius: .4em 0 0 .4em;
   border: 1px solid #444;

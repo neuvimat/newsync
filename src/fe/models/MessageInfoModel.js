@@ -20,9 +20,9 @@ export class MessageInfoModel {
     this.analyzeRawMessage(rawMessage)
   }
 
-   /** @returns {{jsonNoDict, noDict, final, json}} */
+  /** @returns {{jsonNoDict, noDict, final, json}} */
   analyzeRawMessage(rawMessage) {
-    const tmp = unpack(rawMessage)
+    const tmp = unpack(new Uint8Array(rawMessage))
     if (tmp[KEYWORDS.containers]) {
       for (let c in tmp[KEYWORDS.containers]) {
         tmp[KEYWORDS.containers][c] = unpack(tmp[KEYWORDS.containers][c])
@@ -38,11 +38,11 @@ export class MessageInfoModel {
       }
     }
 
-    this.lengthFinal = byteSize(rawMessage.length)
-    this.lengthNoDict = byteSize(pack(msgpackNoDictionary).length)
-    this.lengthJsonNoDict = byteSize(MessageInfoModel.encoder.encode(JSON.stringify(message)).length)
-    this.lengthJsonDict = byteSize(MessageInfoModel.encoder.encode(JSON.stringify(this.dictionary.shortenObject(message))).length)
+    this.lengthFinal = rawMessage.byteLength
+    this.lengthNoDict = pack(msgpackNoDictionary).length
+    this.lengthJsonNoDict = MessageInfoModel.encoder.encode(JSON.stringify(message)).length
+    this.lengthJsonDict = MessageInfoModel.encoder.encode(JSON.stringify(this.dictionary.shortenObject(message))).length
 
-    return {final: this.lengthFinal, noDict: this.lengthNoDict, jsonNoDict: this.lengthJsonNoDict, json:this.lengthJsonDict}
+    return {final: this.lengthFinal, noDict: this.lengthNoDict, jsonNoDict: this.lengthJsonNoDict, json: this.lengthJsonDict}
   }
 }

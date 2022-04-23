@@ -19,11 +19,7 @@ export default {
     msgPackNoDict() {return byteSize(this.$store.state.lengthMsgPackNoDict)},
     json() {return byteSize(this.$store.state.lengthJson)},
     jsonNoDict() {return byteSize(this.$store.state.lengthJsonNoDict)},
-    total() {return byteSize(
-      this.$store.state.lengthMsgPack+
-      this.$store.state.lengthMsgPackNoDict+
-      this.$store.state.lengthJson+
-      this.$store.state.lengthJsonNoDict)}
+    total() {return byteSize(0)}
   }
 }
 </script>
@@ -32,7 +28,7 @@ export default {
 .length-status-bar {
   border-top: 1px solid #555;
   background-color: white;
-  z-index: 50000;
+  z-index: 9999999999;
   position: fixed;
   height: 20px;
   left: 0;

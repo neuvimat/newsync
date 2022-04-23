@@ -13,6 +13,8 @@ import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 import 'source-map-support/register'
 import {LongKeyDictionaryServer} from "@Lib/shared/LongKeyDictionaryServer";
 import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
+import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
+import {Ambulance} from "@/be/model/ambulance";
 
 const commType = 1 // useless
 
@@ -24,28 +26,32 @@ let newSync = null
 // =============================
 // ============= WebSocket SETUP
 // =============================
-// newSync = new NewSyncServer(new WebSocketDriverServer('$'), new MessagePackCoder(), new LongKeyDictionaryServer())
-//
-// wss.on('connection', (socket, request) => {
-//   const client = newSync.addClient(socket)
-//   newSync.fullUpdate(client)
-//   socket.on('message', (message, isBinary) => {
-//     if (isBinary && newSync.handleIfFrameworkMessage(message)) {return}
-//     console.log('Not a NewSync message, run your own code here:', message.toString());
-//   })
-//
-//   socket.on('close', () => {
-//     newSync.removeClient(client.id)
-//   })
-//
-//   socket.on('error', (error) => {
-//     newSync.removeClient(socket)
-//   })
-// })
+newSync = new NewSyncServer(new WebSocketDriverServer(''), new MessagePackCoder(), new LongKeyDictionaryServer())
+
+wss.on('connection', (socket, request) => {
+  const client = newSync.addClient(socket)
+  // newSync.fullUpdate(client)
+
+  socket.on('message', (message, isBinary) => {
+    if (isBinary && newSync.handleIfFrameworkMessage(message, client)) {return}
+    console.log('Not a NewSync message, run your own code here:', message.toString());
+  })
+
+  socket.on('close', () => {
+    newSync.removeClient(client)
+  })
+
+
+  socket.on('error', (error) => {
+    newSync.removeClient(client)
+  })
+})
 
 // =============================
 // ============= WRTC SETUP
 // =============================
+
+/*
 newSync = new NewSyncServer(new RtcDriverServer(), new MessagePackCoder(), new LongKeyDictionaryServer())
 
 io.on('connection', (socket) => {
@@ -85,7 +91,7 @@ io.on('connection', (socket) => {
 
   // When the other (client) side disconnected from the socket IO
   socket.on("disconnect", () => {
-    newSync.removeClient(client.id)
+    newSync.removeClient(client)
   });
 
   // Client received our offer and responded with information about themselves
@@ -103,16 +109,21 @@ io.on('connection', (socket) => {
   });
 })
 
-const container = newSync.addContainer('mySuperContainer', new SimpleContainer())
+*/
+
+const container = newSync.addContainer('health', new SimpleContainer())
 newSync.enableAutoSync()
 
 createSimulation(container.proxy, 4, 12)
 container.proxy.randomData = {a: 0}
+// setInterval(() => {
+//   container.proxy.randomData.$low.set('low prio attribute', Math.random()).getLowPrioChanges()
+// }, 1500)
 setInterval(() => {
-  container.proxy.randomData.$low.set('low prio attribute', Math.random()).getLowPrioChanges()
-}, 1500)
-setInterval(() => {
-  container.proxy.randomData.a++
+  // container.proxy.randomData.a++
+  for (let i = 0; i < 12; i++) {
+    Ambulance.moveAmbulance(container.proxy.ambulances[i])
+  }
 }, 1800)
 
 // Start the server

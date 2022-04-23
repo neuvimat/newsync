@@ -1,29 +1,33 @@
 <template>
   <div class="simulation-view">
+    <LengthStatusBar/>
     <h1>Data simulace</h1>
-    <details class="containers">
+    <details class="containers" open>
       <summary><h2>Containers</h2></summary>
       <div class="containers">
+        <div><input type="checkbox" @input="subscribeAll($event)"><span>Send all override</span></div>
+        <hr>
         <template v-for="(v,k) in containers">
-          <div><input type="checkbox" @click="subscribe(k)"><span>{{ k }}</span></div>
+          <div><input type="checkbox" v-model="checkboxes[k]" @input="subscribe($event, k)"><span>{{ k }}</span></div>
         </template>
       </div>
     </details>
     <details open>
       <summary><h2>Data</h2></summary>
-      <details open>
+      <details>
         <summary><h3>Hospitals</h3></summary>
         <HospitalView v-for="h in hospitals" :ambulances="ambulances" :hospital="h" :show-ambulances="true"/>
       </details>
-      <details open>
+      <details>
         <summary><h3>Ambulances</h3></summary>
         <AmbulanceView v-for="a in ambulances" :ambulance="a" :hospitals="hospitals" :show-hospital="true"/>
       </details>
     </details>
+    <details>
+      <summary><h2>Raw data</h2></summary>
+      <JsonView :message="$store.state.containers"></JsonView>
+    </details>
 
-    <div v-if="showRawState" class="raw-data">
-      <JsonView :message="$store.state.containers"/>
-    </div>
     <div class="requests">
       <h2>Requests</h2>
       <div class="command send-ambulance">
@@ -51,18 +55,38 @@
 import JsonView from "@/fe/components/JsonView";
 import HospitalView from "@/fe/components/HospitalView";
 import AmbulanceView from "@/fe/components/AmbulanceView";
+import LengthStatusBar from "@/fe/components/LengthStatusBar";
+import {ClientCommandFactory} from "@Lib/client/commands/ClientCommandFactory";
 
 export default {
   name: "SimulationView",
-  components: {AmbulanceView, HospitalView, JsonView},
+  components: {LengthStatusBar, AmbulanceView, HospitalView, JsonView},
   data() {
     return {
-      showRawState: false
+      showRawState: false,
+      checkboxes: {},
+      subscribeAllOverride: false
     }
   },
   methods: {
-    subscribe(k) {
-
+    check() {},
+    subscribe(event, k) {
+      this.checkboxes[k] = event.target.checked
+      if (event.target.checked) {
+        this.$store.state.newSync.sendCommand(ClientCommandFactory.SUBSCRIBE_CONTAINER(k))
+      }
+      else {
+        this.$store.state.newSync.sendCommand(ClientCommandFactory.UNSUBSCRIBE_CONTAINER(k))
+      }
+    },
+    subscribeAll(event) {
+      this.subscribeAllOverride = event.target.checked
+      if (event.target.checked) {
+        this.$store.state.newSync.sendCommand(ClientCommandFactory.SUBSCRIBE_ALL())
+      }
+      else {
+        this.$store.state.newSync.sendCommand(ClientCommandFactory.UNSUBSCRIBE_ALL())
+      }
     }
   },
   props: [],
@@ -87,5 +111,14 @@ summary h2, summary h3 {
 }
 .command > * {
   margin-right: .5em;
+}
+.simulation-view {
+  max-width: 1400px;
+  padding: 0 2em;
+  margin: auto auto 30px;
+}
+hr {
+  border: 0;
+  border-top: 1px solid #aaa;
 }
 </style>

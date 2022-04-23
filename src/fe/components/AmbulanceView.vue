@@ -13,10 +13,9 @@
 </template>
 
 <script>
-import HospitalView from "@/fe/components/HospitalView";
 export default {
   name: "AmbulanceView",
-  components: {HospitalView},
+  components: {HospitalView: ()=> import('@/fe/components/HospitalView')},
   props: ['ambulance', 'showHospital'],
   data() {
     return {expanded: null,}
