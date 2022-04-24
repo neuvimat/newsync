@@ -27,6 +27,9 @@ let newSync = null
 // ============= WebSocket SETUP
 // =============================
 newSync = new NewSyncServer(new WebSocketDriverServer(''), new MessagePackCoder(), new LongKeyDictionaryServer())
+newSync.on('add', (client, b, c,)=>{
+
+})
 
 wss.on('connection', (socket, request) => {
   const client = newSync.addClient(socket)

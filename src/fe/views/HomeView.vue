@@ -26,9 +26,10 @@
     <div v-else-if="!$store.state.ready && setup === 1">Connecting to the server, please wait...</div>
     <div v-else>
       <h1>Connected</h1>
-      <div>Successfully connected to the server!</div>
-      <router-link to="/map">Map</router-link>
-      <router-link to="/sim">Simulation view</router-link>
+      <p>Successfully connected to the server! The simulation is now running.</p>
+      <p>Use the <router-link to="/map">map</router-link> to see an example application running on the NewSync framework!</p>
+      <p>Use the <router-link to="/sim">simulation view</router-link> to see the simulation in a different, more data
+      oriented view, that also allows you to interact with the server!</p>
     </div>
   </div>
 </template>
