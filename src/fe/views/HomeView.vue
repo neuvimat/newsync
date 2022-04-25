@@ -26,10 +26,14 @@
     <div v-else-if="!$store.state.ready && setup === 1">Connecting to the server, please wait...</div>
     <div v-else>
       <h1>Connected</h1>
-      <p>Successfully connected to the server! The simulation is now running.</p>
+      <p>Successfully connected to the server!</p>
+      <p><b>To better demonstrate dynamic subscription to just parts of the whole simulation state, before you can see
+        any data or changes made to it, you first have to subscribe to a specific container you wish to
+        observe! You can do so in the <router-link to="/sim">simulation view</router-link> by ticking the
+        container's checkbox .</b></p>
       <p>Use the <router-link to="/map">map</router-link> to see an example application running on the NewSync framework!</p>
       <p>Use the <router-link to="/sim">simulation view</router-link> to see the simulation in a different, more data
-      oriented view, that also allows you to interact with the server!</p>
+        oriented view, that also allows you to interact with the server!</p>
     </div>
   </div>
 </template>

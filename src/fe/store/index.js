@@ -11,8 +11,12 @@ import {ClientCommandFactory} from "@Lib/client/commands/ClientCommandFactory";
 import {SimpleContainer} from "@Lib/client/container/SimpleContainer";
 import {ALIAS} from "@Lib/shared/ALIAS";
 import {MessageInfoModel} from "@/fe/models/MessageInfoModel";
+import {KEYWORDS} from "@Lib/shared/SYMBOLS";
+import {pack} from 'msgpackr'
 
 Vue.use(Vuex)
+
+const tEncoder = new TextEncoder()
 
 let ws = null
 let io = null
@@ -26,6 +30,8 @@ export default new Vuex.Store({
     ready: false,
 
     messagesReceived: 0,
+    lengthFullJson: 0,
+    lengthFullMsgpack: 0,
     lengthMsgPack: 0,
     lengthMsgPackNoDict: 0,
     lengthJson: 0,
@@ -36,6 +42,9 @@ export default new Vuex.Store({
     random() {}
   },
   actions: {
+    sendEvent({state}, payload) {
+      state.newSync.sendEvent(payload.event, ...payload.args)
+    },
     connectWS({state}, payload) {
       let reject, resolve, promise;
       promise = new Promise((_resolve, _reject) => {
@@ -47,6 +56,15 @@ export default new Vuex.Store({
       ns.addContainer('police', new SimpleContainer())
       ns.on(ALIAS.EVENT_SYNC, (event) => {
         console.log('event.message', event.message);
+        if (event.message[KEYWORDS.meta] || event.message[KEYWORDS.containers] || event.message[KEYWORDS.deletes]) {
+          // We received some state update, let's pretend that if NewSync was not used, we would get full update
+          const fakeState = {}
+          for (const k in event.state) {
+            fakeState[k] = event.state[k].pristine
+          }
+          state.lengthFullJson += tEncoder.encode(JSON.stringify(fakeState)).length
+          state.lengthFullMsgpack += pack(fakeState).length
+        }
       })
       state.containers = {}
 

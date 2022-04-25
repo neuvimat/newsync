@@ -4,6 +4,8 @@
     |
     <router-link to="/sim">Simulation</router-link>
     |
+    <router-link to="/data">Data statistics</router-link>
+    |
     <router-link to="/map">Map</router-link>
   </div>
 </template>

@@ -42,14 +42,10 @@ export default {
 
 .hospital-view > .body {
   padding: .5em;
-  background-color: red;
-  color: white
 }
 
 .hospital-view > .header {
-  font-size: 1.2rem;
-  background-color: red;
-  color: white;
+
 }
 
 .hospital-view .ambulances .content {

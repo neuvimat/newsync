@@ -1,54 +1,41 @@
-import {makeSimpleRecursiveProxy} from "../../lib/shared/SimpleProxy";
-import {clear} from "../../lib/objUtil";
+import {EntityContainer} from "@Lib/shared/containers/EntityContainer";
+import {pack} from 'msgpackr'
 
 const proxyE = document.getElementById('proxy');
 const simE = document.getElementById('sim');
 const changesE = document.getElementById('changes');
 const clearE = document.getElementById('clear');
 
-const {changes, pristine, proxy} = makeSimpleRecursiveProxy()
+const c = new EntityContainer()
+c.proxy.x = 50
+c.proxy.x
+delete c.proxy.x
 
-const iters = 1
-const perIter = 10_000_000
+const obj = {a: {b: 5, c: 6}, e: 40}
+const proxy = new Proxy(obj, {
+  get(target, prop, value) {
+    console.log('Get triggered for prop', prop);
+    if (prop === 'a') {
+      return target.e
+    }
+    return target[prop]
+  },
+  set(target,prop,value, receiver) {
+    if (prop === 'x') {
+      console.log('speial trigger, getting a for fun');
+      console.log('is a a or e?', this.get(target, 'a', receiver));
+    }
+    target[prop] = value
+    return true
+  }
+})
+proxy.x = 5
 
-for (let i = 0; i < iters; i++) {
-  // const pristine = {}
-  // const proxy = new Proxy(pristine, {
-  //   get(t, p, r) {return t[p]}, set(t, p, v) {
-  //     t[p] = v;
-  //     return true
-  //   }
-  // })
+window.pack = pack
 
-  let t1 = performance.now()
-  for (let j = 0; j < perIter; j++) {
-    proxy[j] = j
-  }
-  let t2 = performance.now()
-  let t3 = performance.now()
-  for (let j = 0; j < perIter; j++) {
-    pristine[j] = j
-  }
-  let t4 = performance.now()
-  let t5 = performance.now()
-  for (let j = 0; j < perIter; j++) {
-    proxy[j]
-  }
-  let t6 = performance.now()
-  let t7 = performance.now()
-  for (let j = 0; j < perIter; j++) {
-    pristine[j]
-  }
-  let t8 = performance.now()
-  changesE.innerHTML += `<div><h1>TEST RUN ${i}</h1></div>`
-  changesE.innerHTML += `<div><h2>WRITE</h2></div>`
-  changesE.innerHTML += `<div>Proxy: ${(t2 - t1) / 1000}ms</div>`
-  changesE.innerHTML += `<div>Pristine: ${(t4 - t3) / 1000}ms</div>`
-  changesE.innerHTML += `<div><h2>READ</h2></div>`
-  changesE.innerHTML += `<div>Proxy: ${(t6 - t5) / 1000}ms</div>`
-  changesE.innerHTML += `<div>Pristine: ${(t8 - t7) / 1000}ms</div>`
-}
-
-window.p = proxy;
-window.s = sim;
-window.changes = changes;
+window.con = c
+window.p = c.proxy;
+window.c = c.pristine;
+window.ch = c.merges;
+window.m = c.meta
+window.d = c.deletes

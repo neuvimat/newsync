@@ -1,7 +1,7 @@
 <template>
   <div class="length-status-bar">
-    <div>Full (JSON): {{ total }}</div>
-    <div>Full (Messagepack): {{ total }}</div>
+    <div>Full (JSON): {{ fullJson }}</div>
+    <div>Full (Messagepack): {{ fullMsgpack }}</div>
     <div>MessagePack: {{ msgPack }}</div>
     <div>MessagePack (no dictionary): {{ msgPackNoDict }}</div>
     <div>JSON: {{ json }}</div>
@@ -19,7 +19,8 @@ export default {
     msgPackNoDict() {return byteSize(this.$store.state.lengthMsgPackNoDict)},
     json() {return byteSize(this.$store.state.lengthJson)},
     jsonNoDict() {return byteSize(this.$store.state.lengthJsonNoDict)},
-    total() {return byteSize(0)}
+    fullJson() {return byteSize(this.$store.state.lengthFullJson)},
+    fullMsgpack() {return byteSize(this.$store.state.lengthFullMsgpack)},
   }
 }
 </script>

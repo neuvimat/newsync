@@ -15,6 +15,7 @@ import {LongKeyDictionaryServer} from "@Lib/shared/LongKeyDictionaryServer";
 import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
 import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
 import {Ambulance} from "@/be/model/ambulance";
+import {SimulationRunner} from "@/be/simulation/SimulationRunner";
 
 const commType = 1 // useless
 
@@ -115,19 +116,32 @@ io.on('connection', (socket) => {
 */
 
 const container = newSync.addContainer('health', new SimpleContainer())
+const police = newSync.addContainer('police', new SimpleContainer())
 newSync.enableAutoSync()
+const ambulanceRunner = new SimulationRunner(container.proxy, 30, 420)
 
-createSimulation(container.proxy, 4, 12)
-container.proxy.randomData = {a: 0}
-// setInterval(() => {
-//   container.proxy.randomData.$low.set('low prio attribute', Math.random()).getLowPrioChanges()
-// }, 1500)
+newSync.on('sendAmbulance', (client, id, lon, lat)=>{
+  ambulanceRunner.moveAmbulanceTarget(id, [Number(lon), Number(lat)])
+})
+newSync.on('spasmAmbulance', (client, id)=>{
+  ambulanceRunner.moveAmbulanceRandom(id)
+})
+newSync.on('recallAmbulance', (client, id)=>{
+  ambulanceRunner.recallAmbulance(id)
+})
+newSync.on('moveAmbulances', (client, quantity)=>{
+  ambulanceRunner.moveQuantity(Number(quantity))
+})
+newSync.on('stop', (client, id)=>{
+  ambulanceRunner.stop(id)
+})
+newSync.on('stopAll', (client)=>{
+  ambulanceRunner.stopAll()
+})
+
 setInterval(() => {
-  // container.proxy.randomData.a++
-  for (let i = 0; i < 12; i++) {
-    Ambulance.moveAmbulance(container.proxy.ambulances[i])
-  }
-}, 1800)
+  ambulanceRunner.iterate()
+}, 1400)
 
 // Start the server
 server.listen(8080);

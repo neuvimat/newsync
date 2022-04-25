@@ -2,10 +2,10 @@
   <div @click="expanded = !expanded" class="message-info">
     <div style="font-weight: bold">{{formatTime(messageInfo.time)}} - #{{messageInfo.id}}</div>
     <table>
-      <tr><td>JSON:</td><td>{{messageInfo.lengthJsonNoDict}}</td></tr>
-      <tr><td>JSON + dictionary:</td><td>{{messageInfo.lengthJsonDict}}</td></tr>
-      <tr><td>Messagepack:</td><td>{{messageInfo.lengthNoDict}}</td></tr>
-      <tr><td>Messagepack + dictionary:</td><td>{{messageInfo.lengthFinal}}</td></tr>
+      <tr><td>JSON:</td><td>{{messageInfo.lengthJsonNoDict}} B</td></tr>
+      <tr><td>JSON + dictionary:</td><td>{{messageInfo.lengthJsonDict}} B</td></tr>
+      <tr><td>Messagepack:</td><td>{{messageInfo.lengthNoDict}} B</td></tr>
+      <tr><td>Messagepack + dictionary:</td><td>{{messageInfo.lengthFinal}} B</td></tr>
     </table>
     <JsonView v-if="expanded" :message="messageInfo.message"/>
   </div>

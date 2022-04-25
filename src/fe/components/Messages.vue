@@ -3,7 +3,7 @@
     <div :class="{hidden: revealStatus === 0, shown: revealStatus === 1, full: revealStatus === 2}" class="messages">
       <div class="header">Received messages</div>
       <div class="opener" @click="revealStatus = revealStatus === 0 ? 2 : 0">{{ revealStatus === 0 ? '<' : '>' }}</div>
-      <div style="overflow: auto; height: 100%">
+      <div style="overflow: auto; height: 100%; padding-right: .2em">
         <MessageInfo v-for="message in messages" :message-info="message"/>
       </div>
     </div>

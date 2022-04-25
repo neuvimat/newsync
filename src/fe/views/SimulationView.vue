@@ -31,21 +31,29 @@
     <div class="requests">
       <h2>Requests</h2>
       <div class="command send-ambulance">
-        <button>Send ambulance</button>
-        <label>Ambulance ID:<input type="number" min="0" step="1"></label>
-        <label>Target latitude:<input type="number" step="0.01"></label>
-        <label>Target longitude:<input type="number" step="0.01"></label>
+        <button @click="sendEvent('sendAmbulance', sendId, sendLon, sendLat)">Send ambulance</button>
+        <label>Ambulance ID:<input v-model="sendId" type="number" min="0" step="1"></label>
+        <label>Target longitude:<input v-model="sendLon" type="number" step="0.01"></label>
+        <label>Target latitude:<input v-model="sendLat" type="number" step="0.01"></label>
+      </div>
+      <div class="command spasm-ambulance">
+        <button @click="sendEvent('spasmAmbulance', spasmId)">Make ambulance wander</button>
+        <label>Ambulance ID:<input v-model="spasmId" type="number" min="0" step="1"></label>
       </div>
       <div class="command recall-ambulance">
-        <button>Recall ambulance</button>
-        <label>Ambulance ID:<input type="number" min="0" step="1"></label>
+        <button @click="sendEvent('recallAmbulance', recallId)">Recall ambulance</button>
+        <label>Ambulance ID:<input v-model="recallId" type="number" min="0" step="1"></label>
       </div>
       <div class="command move-number">
-        <button>Make X ambulances moving</button>
-        <label>X:<input type="number" min="0" step="1"></label>
+        <button @click="sendEvent('moveAmbulances', moveQuantity)">Make X ambulances moving</button>
+        <label>X:<input v-model="moveQuantity" type="number" min="0" step="1"></label>
+      </div>
+      <div class="command stop-once">
+        <button @click="sendEvent('stop', stopId)">Stop ambulance</button>
+        <label>X:<input v-model="stopId" type="number" min="0" step="1"></label>
       </div>
       <div class="command stop-all">
-        <button>Stop all ambulances</button>
+        <button @click="sendEvent('stopAll')">Stop all ambulances</button>
       </div>
     </div>
   </div>
@@ -65,10 +73,22 @@ export default {
     return {
       showRawState: false,
       checkboxes: {},
-      subscribeAllOverride: false
+      subscribeAllOverride: false,
+
+      sendId: 0,
+      sendLat: 0,
+      sendLon: 0,
+      spasmId: 0,
+      recallId: 0,
+      moveQuantity: 1,
+      stopId: 0
     }
   },
   methods: {
+    sendEvent(eventName, ...args) {
+      this.$store.dispatch('sendEvent', {event: eventName, args: args})
+    },
+
     check() {},
     subscribe(event, k) {
       this.checkboxes[k] = event.target.checked
