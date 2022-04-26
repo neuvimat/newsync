@@ -7,10 +7,15 @@
       @update:center="centerUpdated"
       @update:bounds="boundsUpdated">
       <LTileLayer
-        :url="`https://zzs.fel.cvut.cz/tiles/{z}/{x}/{y}.png`"
-      ></LTileLayer>
-      <LMarker v-for="a in ambulances" :lat-lng="[a.pos.lat,a.pos.lon]"></LMarker>
-      <LMarker v-for="h in hospitalMarkers" :lat-lng="[h.pos.lat,h.pos.lon]"></LMarker>
+        :url="`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`"
+        :attribution="attribution"
+      />
+      <LMarker v-for="a in ambulances" :lat-lng="[a.pos.lat,a.pos.lon]">
+        <LIcon :icon-url="ambulanceIcon" :icon-size="[10,20]" :icon-anchor="[5,20]"/>
+      </LMarker>
+      <LMarker v-for="h in hospitalMarkers" :lat-lng="[h.pos.lat,h.pos.lon]">
+        <LIcon :icon-url="ambulanceIcon" :icon-size="[10,20]" :icon-anchor="[5,20]"/>
+      </LMarker>
     </LMap>
     <LengthStatusBar/>
     <Messages/>
@@ -20,6 +25,7 @@
 <script>
 import {LMap, LTileLayer, LMarker, LIcon} from "vue2-leaflet";
 import 'leaflet/dist/leaflet.css';
+import ambulanceMarker from '@/assets/icon-home.png'
 
 import { Icon } from 'leaflet';
 import LengthStatusBar from "@/fe/components/LengthStatusBar";
@@ -39,10 +45,12 @@ export default {
   data() {
     return {
       zoom: 12,
-      center: [49, 18]
+      center: [49, 18],
+      attribution: `&copy; <a href=\\\\"https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`
     }
   },
   computed: {
+    ambulanceIcon() {return ambulanceMarker},
     hospitalMarkers() {
       return this.$store.state.containers?.health?.hospitals || {}
     },
@@ -76,7 +84,7 @@ export default {
 
 <style scoped>
 .map {
-  height: 100vh;
+  height: calc(100vh - 20px);
   width: 100vw;
   /*position: relative;*/
 }

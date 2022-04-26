@@ -1,7 +1,7 @@
 <template>
   <div class="simulation-view">
     <LengthStatusBar/>
-    <h1>Data simulace</h1>
+    <h1>Simulation data</h1>
     <details class="containers" open>
       <summary><h2>Containers</h2></summary>
       <div class="containers">

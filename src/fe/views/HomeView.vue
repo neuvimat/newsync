@@ -29,11 +29,28 @@
       <p>Successfully connected to the server!</p>
       <p><b>To better demonstrate dynamic subscription to just parts of the whole simulation state, before you can see
         any data or changes made to it, you first have to subscribe to a specific container you wish to
-        observe! You can do so in the <router-link to="/sim">simulation view</router-link> by ticking the
+        observe! You can do so in the
+        <router-link to="/sim">simulation view</router-link>
+        by ticking the
         container's checkbox .</b></p>
-      <p>Use the <router-link to="/map">map</router-link> to see an example application running on the NewSync framework!</p>
-      <p>Use the <router-link to="/sim">simulation view</router-link> to see the simulation in a different, more data
-        oriented view, that also allows you to interact with the server!</p>
+      <p>Use the
+        <router-link to="/map">map</router-link>
+        to see an example application running on the NewSync framework!
+      </p>
+      <p>Use the
+        <router-link to="/sim">simulation view</router-link>
+        to see the simulation in a different, more data
+        oriented view, that also allows you to interact with the server!
+      </p>
+    </div>
+    <div>
+      <h2>Acknowledgements</h2>
+      <ul>
+        <li>Hospital icon by 'medical', available at shareicon.com</li>
+        <li>Map tiles kindly provided by OpenStreetMap: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>
+          contributors
+        </li>
+      </ul>
     </div>
   </div>
 </template>

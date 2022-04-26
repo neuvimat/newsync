@@ -41,11 +41,11 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach(async (to, from, next) => {
-  if (!store.state.ready && to.name !== 'home') {
-    next('/')
-  }
-  next()
-})
+// router.beforeEach(async (to, from, next) => {
+//   if (!store.state.ready && to.name !== 'home') {
+//     next('/')
+//   }
+//   next()
+// })
 
 export default router
