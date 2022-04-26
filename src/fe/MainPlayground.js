@@ -1,4 +1,4 @@
-import {EntityContainer} from "@Lib/shared/containers/EntityContainer";
+import {ObjectContainer} from "@Lib/shared/containers/ObjectContainer";
 import {pack} from 'msgpackr'
 import {clear} from "@Lib/objUtil";
 
@@ -7,7 +7,7 @@ const simE = document.getElementById('sim');
 const changesE = document.getElementById('changes');
 const clearE = document.getElementById('clear');
 
-const c = new EntityContainer()
+const c = new ObjectContainer()
 
 /*
 c.proxy.a = 40
