@@ -1,14 +1,14 @@
 <template>
   <div class="hospital-view">
-    <div class="header" @click="expanded = !expanded">{{ hospital.id }}: {{ hospital.name }} {{expanded ? '-' : '+'}}</div>
+    <div class="header" @click="expanded = !expanded">{{ station.id }}: {{ station.name }} {{expanded ? '-' : '+'}}</div>
     <div v-if="expanded" class="body">
-      <div class="address">Address: {{ hospital.address }}</div>
-      <div class="position">Position: {{ hospital.pos.lat }}N {{ hospital.pos.lon }}E</div>
-      <template v-if="showAmbulances">
+      <div class="address">Address: {{ station.address }}</div>
+      <div class="position">Position: {{ station.pos.lat }}N {{ station.pos.lon }}E</div>
+      <template v-if="showCars">
         <div class="ambulances">
-          <div class="header">Ambulances:</div>
+          <div class="header">Police vehicles:</div>
           <div class="content">
-            <AmbulanceView v-for="a in hospital.ambulances" :ambulance="ambulances[a]" :showHospital="false"/>
+            <Car v-for="a in station.cars" :ambulance="cars[a]" :showHospital="false"/>
           </div>
         </div>
       </template>
@@ -20,17 +20,17 @@
 import AmbulanceView from "@/fe/components/AmbulanceView";
 
 export default {
-  name: "HospitalView",
+  name: "StationView",
   components: {AmbulanceView},
-  props: ['hospital', 'showAmbulances'],
+  props: ['station', 'showCars'],
   data() {
     return {
       expanded: false
     }
   },
   computed: {
-    ambulances() {
-      return this.$store.state.containers.health?.ambulances || {}
+    cars() {
+      return this.$store.state.containers.police?.cars || {}
     }
   }
 }

@@ -16,6 +16,7 @@ import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
 import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
 import {Ambulance} from "@/be/model/ambulance";
 import {SimulationRunner} from "@/be/simulation/SimulationRunner";
+import {PoliceSimulationRunner} from "@/be/simulation/PoliceSimulationRunner";
 
 const commType = 1 // useless
 
@@ -119,6 +120,7 @@ const container = newSync.addContainer('health', new SimpleContainer())
 const police = newSync.addContainer('police', new SimpleContainer())
 newSync.enableAutoSync()
 const ambulanceRunner = new SimulationRunner(container.proxy, 30, 420)
+const policeRunner = new PoliceSimulationRunner(police.proxy, 8, 125)
 
 newSync.on('sendAmbulance', (client, id, lon, lat)=>{
   ambulanceRunner.moveAmbulanceTarget(id, [Number(lon), Number(lat)])
@@ -139,9 +141,29 @@ newSync.on('stopAll', (client)=>{
   ambulanceRunner.stopAll()
 })
 
+newSync.on('sendCar', (client, id, lon, lat)=>{
+  policeRunner.moveCarTarget(id, [Number(lon), Number(lat)])
+})
+newSync.on('spasmCar', (client, id)=>{
+  policeRunner.moveCarRandom(id)
+})
+newSync.on('recallCar', (client, id)=>{
+  policeRunner.recallCar(id)
+})
+newSync.on('moveCars', (client, quantity)=>{
+  policeRunner.moveQuantity(Number(quantity))
+})
+newSync.on('stopCar', (client, id)=>{
+  policeRunner.stop(id)
+})
+newSync.on('stopAllCars', (client)=>{
+  policeRunner.stopAll()
+})
+
 setInterval(() => {
   ambulanceRunner.iterate()
-}, 1400)
+  policeRunner.iterate()
+}, 333)
 
 // Start the server
 server.listen(8080);

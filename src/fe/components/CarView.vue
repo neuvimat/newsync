@@ -1,18 +1,19 @@
 <template>
   <div class="ambulance-view">
     <div class="header">
-      <span class="button wander" @click="sendEvent('spasmAmbulance', ambulance.id)"></span>
-      <span class="button home" @click="sendEvent('recallAmbulance', ambulance.id)"></span>
-      <span class="button stop" @click="sendEvent('stop', ambulance.id)"></span>
-      <span @click="expanded = !expanded">{{ ambulance.id }}: {{ ambulance.sign }} {{expanded ? '-' : '+'}}</span>
+      <span class="button wander" @click="sendEvent('spasmCar', car.id)"></span>
+      <span class="button home" @click="sendEvent('recallCar', car.id)"></span>
+      <span class="button stop" @click="sendEvent('stopCar', car.id)"></span>
+      <span @click="expanded = !expanded">{{ car.id }}: {{ car.sign }} {{expanded ? '-' : '+'}}</span>
     </div>
     <div v-if="expanded" class="body">
       <div class="is-home">Status: {{ status }}</div>
-      <div class="position">Position: {{ ambulance.pos.lat }}N {{ ambulance.pos.lon }}E</div>
-      <div v-if="showHospital" class="hospital">
-        <div>Hospital:</div>
+      <div class="is-home">Type: {{ type }}</div>
+      <div class="position">Position: {{ car.pos.lat }}N {{ car.pos.lon }}E</div>
+      <div v-if="showStation" class="hospital">
+        <div>Police station:</div>
         <div class="hospital-wrapper">
-          <HospitalView :hospital="hospitals[ambulance.hospital]" :show-ambulances="false"/>
+          <StationView :station="stations[car.station]" :show-ambulances="false"/>
         </div>
       </div>
     </div>
@@ -21,10 +22,12 @@
 
 <script>
 
+const POLICE_TYPE = {'city': 'City police', 'swat': 'URNA', 'state': 'State police'}
+
 export default {
-  name: "AmbulanceView",
-  components: {HospitalView: () => import('@/fe/components/HospitalView')},
-  props: ['ambulance', 'showHospital'],
+  name: "CarView",
+  components: {StationView: () => import('@/fe/components/StationView')},
+  props: ['car', 'showStation'],
   methods: {
     sendEvent(eventName, ...args) {
       this.$store.dispatch('sendEvent', {event: eventName, args: args})
@@ -34,15 +37,18 @@ export default {
     return {expanded: null,}
   },
   computed: {
-    hospitals() {
-      return this.$store.state.containers.health?.hospitals || {}
+    type() {
+      return POLICE_TYPE[this.car.type]
+    },
+    stations() {
+      return this.$store.state.containers.police?.stations || {}
     },
     status() {
-      const h = this.hospitals[this.ambulance.hospital]
+      const h = this.stations[this.car.station]
       if (!h) {
         return 'No hospital data known!'
       }
-      else if (this.ambulance.pos.lat === h.pos.lat && this.ambulance.pos.lon === h.pos.lon) {
+      else if (this.car.pos.lat === h.pos.lat && this.car.pos.lon === h.pos.lon) {
         return 'Stationed at base!'
       }
       else {return 'On a mission!'}

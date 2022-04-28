@@ -8,7 +8,7 @@ export class SimulationRunner {
 
   constructor(state, hospitals, ambulances) {
     this.state = state
-    createSimulation(state)
+    createSimulation(state, hospitals, ambulances)
     this.ambulanceMovers = new Map()
     this.lastIteration = new Date().getTime()
   }

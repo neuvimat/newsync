@@ -47,6 +47,8 @@
       <h2>Acknowledgements</h2>
       <ul>
         <li>Hospital icon by 'medical', available at shareicon.com</li>
+        <li><a href="https://www.flaticon.com/free-icons/police-car" title="police car icons">Police car icons created by Freepik - Flaticon</a></li>
+        <li><a href="https://www.flaticon.com/free-icons/ambulance" title="ambulance icons">Ambulance icons created by Freepik - Flaticon</a></li>
         <li>Map tiles kindly provided by OpenStreetMap: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>
           contributors
         </li>
