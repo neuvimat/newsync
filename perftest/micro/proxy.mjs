@@ -38,7 +38,7 @@ t.test('Native cached fn array', () => {
   }
 })
 
-t.test('Empty proxy', () => {
+t.test('Stupid proxy', () => {
   for (let i = 0; i < 150000; i++) {
     proxy.push(i)
   }
@@ -50,7 +50,7 @@ t.test('Smart proxy', () => {
   }
 })
 
-t.test('Cached smart proxy', () => {
+t.test('Smart proxy cached push', () => {
   const fn = smartProxy2.push
   for (let i = 0; i < 150000; i++) {
     fn(i)

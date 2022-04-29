@@ -16,11 +16,19 @@
       <summary><h2>Data</h2></summary>
       <details>
         <summary><h3>Hospitals</h3></summary>
-        <HospitalView v-for="h in hospitals" :ambulances="ambulances" :hospital="h" :show-ambulances="true"/>
+        <HospitalView v-for="h in hospitals" :hospital="h" :show-ambulances="true"/>
       </details>
       <details>
         <summary><h3>Ambulances</h3></summary>
-        <AmbulanceView v-for="a in ambulances" :ambulance="a" :hospitals="hospitals" :show-hospital="true"/>
+        <AmbulanceView v-for="a in ambulances" :ambulance="a" :show-hospital="true"/>
+      </details>
+      <details>
+        <summary><h3>Police stations</h3></summary>
+        <StationView v-for="s in stations" :station="s" :show-cars="true"/>
+      </details>
+      <details>
+        <summary><h3>Police car</h3></summary>
+        <CarView v-for="c in cars" :car="c" :show-station="true"/>
       </details>
     </details>
     <details>
@@ -65,10 +73,12 @@ import HospitalView from "@/fe/components/HospitalView";
 import AmbulanceView from "@/fe/components/AmbulanceView";
 import LengthStatusBar from "@/fe/components/LengthStatusBar";
 import {ClientCommandFactory} from "@Lib/client/commands/ClientCommandFactory";
+import StationView from "@/fe/components/StationView";
+import CarView from "@/fe/components/CarView";
 
 export default {
   name: "SimulationView",
-  components: {LengthStatusBar, AmbulanceView, HospitalView, JsonView},
+  components: {CarView, StationView, LengthStatusBar, AmbulanceView, HospitalView, JsonView},
   data() {
     return {
       showRawState: false,
@@ -119,6 +129,12 @@ export default {
     },
     ambulances() {
       return this.$store.state.containers.health?.ambulances
+    },
+    stations() {
+      return this.$store.state.containers.police?.stations
+    },
+    cars() {
+      return this.$store.state.containers.police?.cars
     },
   }
 }

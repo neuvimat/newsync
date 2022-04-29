@@ -8,7 +8,7 @@
         <div class="ambulances">
           <div class="header">Police vehicles:</div>
           <div class="content">
-            <Car v-for="a in station.cars" :ambulance="cars[a]" :showHospital="false"/>
+            <CarView v-for="a in station.cars" :car="cars[a]" :showHospital="false"/>
           </div>
         </div>
       </template>
@@ -18,10 +18,11 @@
 
 <script>
 import AmbulanceView from "@/fe/components/AmbulanceView";
+import CarView from "@/fe/components/CarView";
 
 export default {
   name: "StationView",
-  components: {AmbulanceView},
+  components: {CarView, AmbulanceView},
   props: ['station', 'showCars'],
   data() {
     return {
