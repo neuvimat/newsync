@@ -29,9 +29,6 @@ let newSync = null
 // ============= WebSocket SETUP
 // =============================
 newSync = new NewSyncServer(new WebSocketDriverServer(''), new MessagePackCoder(), new LongKeyDictionaryServer())
-newSync.on('add', (client, b, c,)=>{
-
-})
 
 wss.on('connection', (socket, request) => {
   const client = newSync.addClient(socket)
@@ -39,7 +36,7 @@ wss.on('connection', (socket, request) => {
 
   socket.on('message', (message, isBinary) => {
     if (isBinary && newSync.handleIfFrameworkMessage(message, client)) {return}
-    console.log('Not a NewSync message, run your own code here:', message.toString());
+    console.log('Received a non-NewSync message, run your own code here:', message.toString());
   })
 
   socket.on('close', () => {
@@ -118,6 +115,7 @@ io.on('connection', (socket) => {
 
 const container = newSync.addContainer('health', new SimpleContainer())
 const police = newSync.addContainer('police', new SimpleContainer())
+
 newSync.enableAutoSync()
 const ambulanceRunner = new SimulationRunner(container.proxy, 30, 420)
 const policeRunner = new PoliceSimulationRunner(police.proxy, 8, 125)

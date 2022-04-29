@@ -1,11 +1,21 @@
 <template>
   <div class="length-status-bar">
     <div>Full (JSON): {{ fullJson }} (100%)</div>
-    <div>Full (Messagepack): {{ fullMsgpack }} ({{ (this.$store.state.lengthFullMsgpack * 100 / this.$store.state.lengthFullJson).toFixed(2) + '%'}})</div>
-    <div>MessagePack: {{ msgPack }} ({{ (this.$store.state.lengthMsgPack * 100 / this.$store.state.lengthFullJson).toFixed(2) + '%'}})</div>
-    <div>MessagePack (no dictionary): {{ msgPackNoDict }} ({{ (this.$store.state.lengthMsgPackNoDict * 100 / this.$store.state.lengthFullJson).toFixed(2) + '%'}})</div>
-    <div>JSON: {{ json }} ({{ (this.$store.state.lengthJson * 100 / this.$store.state.lengthFullJson).toFixed(2) + '%'}})</div>
-    <div>JSON (no dictionary): {{ jsonNoDict }} ({{ (this.$store.state.lengthJsonNoDict * 100 / this.$store.state.lengthFullJson).toFixed(2) + '%'}})</div>
+    <div>Full (Messagepack): {{ fullMsgpack }} ({{
+        (this.$store.state.lengthFullMsgpack * 100 / this.$store.state.lengthFullJson).toFixed(2) + '%'
+      }} )</div>
+    <div>MessagePack: {{ msgPack }} ({{
+        (this.$store.state.lengthMsgPack * 100 / this.$store.state.lengthFullJson).toFixed(2) + '%'
+      }})</div>
+    <div>MessagePack (no dictionary): {{ msgPackNoDict }} ({{
+        (this.$store.state.lengthMsgPackNoDict * 100 / this.$store.state.lengthFullJson).toFixed(2) + '%'
+      }})</div>
+    <div>JSON: {{ json }} ({{
+        (this.$store.state.lengthJson * 100 / this.$store.state.lengthFullJson).toFixed(2) + '%'
+      }})</div>
+    <div>JSON (no dictionary): {{ jsonNoDict }} ({{
+        (this.$store.state.lengthJsonNoDict * 100 / this.$store.state.lengthFullJson).toFixed(2) + '%'
+      }})</div>
   </div>
 </template>
 
