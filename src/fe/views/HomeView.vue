@@ -13,10 +13,10 @@
               <!--        <option value="2" disabled>socket.io</option>-->
             </select>
           </legend>
-          <div v-if="connectionType == 0">
+          <div v-if="connectionType === 0">
             <label>Websocket URL:<br/><input v-model="websocketUrl" type="text"></label>
           </div>
-          <div v-if="connectionType == 1">
+          <div v-if="connectionType === 1">
             <label>Signalling server URL:<br/><input v-model="signalUrl" type="text"></label>
           </div>
         </fieldset>
@@ -92,14 +92,27 @@ export default {
     connect(e) {
       this.setup = 1
       e.preventDefault()
-      this.$store.dispatch('connectWS', {url: this.websocketUrl})
-        .then(() => {
-          this.setup = 2
-          this.$store.state.ready = true
-        })
-        .catch(() => {
-          this.setup = 0
-        })
+      console.log('this.connectionType', this.connectionType);
+      if (Number(this.connectionType) === 0) {
+        this.$store.dispatch('connectWS', {url: this.websocketUrl})
+          .then(() => {
+            this.setup = 2
+            this.$store.state.ready = true
+          })
+          .catch(() => {
+            this.setup = 0
+          })
+      }
+      else if (Number(this.connectionType) === 1) {
+        this.$store.dispatch('connectRtc', {})
+          .then(() => {
+            this.setup = 2
+            this.$store.state.ready = true
+          })
+          .catch(() => {
+            this.setup = 0
+          })
+      }
     },
     connectWS() {},
     connectRTC() {}

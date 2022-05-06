@@ -14,9 +14,9 @@ export default {
   name: 'App',
   components: {Navigation},
   mounted() {
-    // let recaptchaScript = document.createElement('script')
-    // recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js')
-    // document.head.appendChild(recaptchaScript)
+    let ioscript = document.createElement('script')
+    ioscript.setAttribute('src', process.env.VUE_APP_BE + '/socket.io/socket.io.js')
+    document.head.appendChild(ioscript)
   }
 }
 </script>
