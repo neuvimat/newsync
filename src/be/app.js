@@ -14,7 +14,7 @@ import indexRouter from "./routes/index";
 export let app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, '../src/be/views'));
 app.set('view engine', 'twig');
 
 app.use(logger('dev'));

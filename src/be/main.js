@@ -20,7 +20,7 @@ import {PoliceSimulationRunner} from "@/be/simulation/PoliceSimulationRunner";
 import {ObjectContainer} from "@Lib/shared/containers/ObjectContainer";
 
 const port = Number(process.argv[2]) || 8080
-const commType = Number(process.argv[2]) || 2
+const commType = Number(process.argv[3]) || 2
 
 // Create the server and socket.io
 const [server, io, wss] = createServer(port); // Express and socket.io boilerplate
@@ -122,7 +122,7 @@ const container = newSync.addContainer('health', new ObjectContainer())
 const police = newSync.addContainer('police', new ObjectContainer())
 
 newSync.enableAutoSync()
-const ambulanceRunner = new SimulationRunner(container.proxy, 30, 420)
+const ambulanceRunner = new SimulationRunner(container.proxy, 100, 600)
 const policeRunner = new PoliceSimulationRunner(police.proxy, 8, 125)
 
 newSync.on('sendAmbulance', (client, id, lon, lat) => {
