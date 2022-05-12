@@ -1,3 +1,7 @@
+/**
+ * This is just a library file for nodeMain.mjs
+ */
+
 import {performance} from 'perf_hooks'
 import _ from "lodash";
 

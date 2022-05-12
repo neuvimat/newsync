@@ -1,3 +1,7 @@
+/**
+ * This is just a library file for browserMain.mjs
+ */
+
 import _ from "lodash";
 
 const errors = []

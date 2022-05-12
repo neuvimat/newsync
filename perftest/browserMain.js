@@ -1,3 +1,9 @@
+/**
+ * This test the same as nodeMain.mjs performance test, but made to run in a browser instead. Since browser cannot
+ * create a new file, it prints the results in the html web page instead.
+ */
+
+
 import * as tester from './performTestBrowser.js'
 import generateObject from "../lib/bigObjectGenerator.js";
 import {byteSize} from "../lib/format.mjs";

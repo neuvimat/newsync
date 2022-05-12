@@ -22,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, '../dist')));
+app.use('/script',express.static(path.join(__dirname, '../perftest/')));
 app.use(express.static(path.join(__dirname, '../dist')));
 
 app.use('/', indexRouter);

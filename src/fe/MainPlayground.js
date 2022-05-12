@@ -2,6 +2,7 @@ import {ObjectContainer} from "@Lib/shared/containers/ObjectContainer";
 import {pack, unpack} from 'msgpackr'
 import {clear} from "@Lib/objUtil";
 
+
 import * as x from 'arraydiff'
 import * as y from 'fast-array-diff'
 import * as z from 'jsondiffpatch'
@@ -9,8 +10,10 @@ import * as z from 'jsondiffpatch'
 import * as _ from 'lodash'
 import assert from "assert";
 import {fullCompare} from "@Lib/shared/proxies/ObjectProxyHandler";
+import {byteSize} from "@Lib/format.mjs";
 
 window._ = _
+window.byteSize = byteSize
 
 const obj1 = {one: 1, two: 'two', thre: [1, 2, 3], nest: {a: 15}}
 const obj2 = {lolec: 'true', akafuka: true, nested: {arrayszs: [1, 2, 3]}, sivt: [6, 9]}

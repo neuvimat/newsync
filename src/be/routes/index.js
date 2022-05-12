@@ -23,4 +23,7 @@ router.get('/perftest', function(req, res, next) {
 router.get('/test', function(req, res, next) {
   res.render('perftest', { title: 'Format Size test & speed' });
 });
+router.get('/test/:file', function(req, res, next) {
+  res.render('script', { script: req.params.file });
+});
 module.exports = router;

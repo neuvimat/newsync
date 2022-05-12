@@ -1,3 +1,8 @@
+/**
+ * This test is to be run in Node.js environment. It tests whether the different implementations of the same messagepack
+ * format that produces results in varying sizes can still be interchangeably deserialized correctly.
+ */
+
 import msgpack from "msgpack";
 import * as msgpackr from "msgpackr";
 import _ from "lodash";

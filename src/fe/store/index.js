@@ -24,6 +24,7 @@ const tEncoder = new TextEncoder()
 let ws = null
 let ios = null
 let wrtc = null
+let logged = false
 
 export default new Vuex.Store({
   state: {
@@ -122,6 +123,16 @@ export default new Vuex.Store({
           }
           state.lengthFullJson += tEncoder.encode(JSON.stringify(fakeState)).length
           state.lengthFullMsgpack += pack(fakeState).length
+
+          if (state.lengthFullJson > 52428800 && !logged) {
+            logged = true
+            console.log('state.lengthFullJson', state.lengthFullJson);
+            console.log('state.lengthFullMsgpack', state.lengthFullMsgpack);
+            console.log('state.lengthJson', state.lengthJson);
+            console.log('state.lengthJsonNoDict', state.lengthJsonNoDict);
+            console.log('state.lengthMsgPack', state.lengthMsgPack);
+            console.log('state.lengthMsgPackNoDict', state.lengthMsgPackNoDict);
+          }
         }
       })
       state.containers = {}
@@ -162,7 +173,16 @@ export default new Vuex.Store({
           }
           event.channel.binaryType = 'arraybuffer'
           event.channel.onmessage = (msg) => {
-            ns.handleIfFrameworkMessage(msg.data)
+            if (ns.handleIfFrameworkMessage(msg.data)) {
+              Vue.set(state.containers, 'health', {...ns.containers.health.pristine})
+              Vue.set(state.containers, 'police', {...ns.containers.police.pristine})
+              const mi = new MessageInfoModel(msg.data, ns.dict, ++state.messagesReceived, new Date())
+              state.receivedMessages.push(mi)
+              state.lengthMsgPack += mi.lengthFinal
+              state.lengthMsgPackNoDict += mi.lengthNoDict
+              state.lengthJson += mi.lengthJsonDict
+              state.lengthJsonNoDict += mi.lengthJsonNoDict
+            }
           }
         };
 

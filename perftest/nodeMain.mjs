@@ -1,3 +1,8 @@
+/**
+ * This test is to be run in Node.js environment. It tests the performance of many formats and prints out the results
+ * into a stats.txt file.
+ */
+
 import * as tester from './performTestNode.mjs'
 import generateObject from "../lib/bigObjectGenerator.js";
 import _ from 'lodash'
