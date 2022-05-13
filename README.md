@@ -28,11 +28,11 @@ Each of the main folders (`/lib`, `/src` and `/perftest`) have their own readme.
 instructions for that part. It also features documentation, such as how to integrate the NewSync framework into your
 application.
 
-###However, have a look at the general quickstart section to see common problems and prerequisites!
+### However, have a look at the general quickstart section to see common problems and prerequisites!
 
 ## General quickstart
 ### Running the demo application
-####Make sure to install `node-pre-gyp` before using ```npm install``` in the project directory!  
+#### Make sure to install `node-pre-gyp` before using ```npm install``` in the project directory!  
 
 **First, install the node-pre-gyp package**, then install the project dependencies. The 
 ```npm install node-pre-gyp -g``` is required for a ```wrtc``` package to properly install .node addons.
