@@ -81,7 +81,7 @@ addon is most likely not going to be installed properly.
 # Format performance test
 ## Node.js
 ### Limited version
-The limited version of the test excludes tests of `mspack` package which is problematic to get working properly.
+The limited version of the tests excludes the test of `msgpack` package which is problematic to get working properly.
 
 To run the format performance tests, run
 ```
@@ -94,12 +94,12 @@ There is also a full version of the format tests, runnable with this command:
 ```
 npm run formatTest
 ```
-The main difference is this version of the test also tests a `mspack` dependency, which is Node.js only and requires
+The main difference is this version of the test also tests a `msgpack` dependency, which is Node.js only and requires
 a .node addon to run properly, however setting up this package is problematic and often causes issues. To make the
-general `npm install` command run smoothly when installing all the dependencies, the `msgpack` package is absent from
-`package.json`.
+general `npm install` command runs smoothly when installing all the project dependencies, the `msgpack` package is
+absent from `package.json`.
 
-To make the test runnable, install the `msgpack` package with this command:
+To make the full tests runnable, install the `msgpack` package with this command:
 ```
 npm install msgpack
 ```
@@ -125,8 +125,8 @@ There are also some unit tests inside the `test_src` folder. Because the project
 runner does not support ESM imports (and the whole project code base is in ESM), first, they have to be transpiled
 by Webpack.
 
-Use this command to transpile all the test source files and run Mocha on the result (the resulting files will be put
-in the `test` folder).
+Use this command to transpile all the test source files and run to Mocha on the result (the transpiled files will be put
+in `/test` folder).
 ```
 npm run test
 ```
