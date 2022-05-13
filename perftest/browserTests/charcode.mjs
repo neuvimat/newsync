@@ -1,13 +1,8 @@
-/**
- * This test can be run in both Node.js and the browser.
- * It prints all characters from 40 to 70 000 and checks their size in bytes and how JSON would print them.
- */
-
 let intro = document.createElement('div');
-intro.innerText = 'Generating report, it may take up few seconds...'
+intro.innerText = 'Generating report, it may take up to a few seconds...'
 document.body.append(intro)
 
-setTimeout(main, 0)
+setTimeout(main, 10) // Give the browser some time to render the above div before getting stuck in the main()
 
 function main() {
   let table = document.createElement('table');

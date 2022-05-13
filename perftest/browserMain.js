@@ -4,7 +4,7 @@
  */
 
 
-import * as tester from './performTestBrowser.js'
+import * as tester from './lib/performTestBrowser.js'
 import generateObject from "../lib/bigObjectGenerator.js";
 import {byteSize} from "../lib/format.mjs";
 

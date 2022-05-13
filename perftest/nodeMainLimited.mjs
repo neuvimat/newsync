@@ -3,7 +3,7 @@
  * into a stats.txt file.
  */
 
-import * as tester from './performTestNode.mjs'
+import * as tester from './lib/performTestNode.mjs'
 import generateObject from "../lib/bigObjectGenerator.js";
 import _ from 'lodash'
 import {byteSize} from "../lib/format.mjs";
