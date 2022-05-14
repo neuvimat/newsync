@@ -17,6 +17,7 @@
     "watchBack": "webpack --watch --config ./webpack.back.config.js",
     "watchFront": "webpack --watch --config ./webpack.front.config.js",
     "watchTest": "webpack --watch --config ./webpack.test.config.js",
+    "watchPerf": "webpack --watch --config ./webpack.perftest.config.js",
     "test": "webpack --config ./webpack.test.config.js && mocha"
   },
   "main": "index.js",

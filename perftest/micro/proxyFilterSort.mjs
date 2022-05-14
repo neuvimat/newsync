@@ -78,37 +78,5 @@ t.test('Basic proxy filter', () => {
 })
 
 
-
-t.test('Native push', () => {
-  for (let i = 0; i < 10_000; i++) {
-    array.push((i * 2 + 1) * (-1 + ((i % 2) * 2)))
-  }
-})
-
-t.test('Empty proxy push', () => {
-  for (let i = 0; i < 10_000; i++) {
-    proxy.push((i * 2 + 1) * (-1 + ((i % 2) * 2)))
-  }
-})
-
-t.test('Smart proxy push', () => {
-  for (let i = 0; i < 10_000; i++) {
-    smartproxy.push((i * 2 + 1) * (-1 + ((i % 2) * 2)))
-  }
-})
-
-t.test('Reflect proxy push', () => {
-  for (let i = 0; i < 10_000; i++) {
-    reflectProxy.push((i * 2 + 1) * (-1 + ((i % 2) * 2)))
-  }
-})
-
-t.test('Basic proxy push', () => {
-  for (let i = 0; i < 10_000; i++) {
-    basicProxy.push((i * 2 + 1) * (-1 + ((i % 2) * 2)))
-  }
-})
-
-
-t.runTests(100, 13)
+t.runTests(100, 10)
 t.writeStats('results - proxyFilterSort.txt')

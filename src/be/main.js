@@ -118,6 +118,10 @@ if (commType === 2) {
   })
 }
 
+// =============================
+// ============= GENERAL SETUP
+// =============================
+
 const container = newSync.addContainer('health', new ObjectContainer())
 const police = newSync.addContainer('police', new ObjectContainer())
 
