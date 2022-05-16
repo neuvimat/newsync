@@ -11,7 +11,7 @@ import {ClientCommandFactory} from "@Lib/client/commands/ClientCommandFactory";
 import {SimpleContainer} from "@Lib/client/container/SimpleContainer";
 import {ALIAS} from "@Lib/shared/ALIAS";
 import {MessageInfoModel} from "@/fe/models/MessageInfoModel";
-import {KEYWORDS} from "@Lib/shared/SYMBOLS";
+import {INDICES, KEYWORDS} from "@Lib/shared/SYMBOLS";
 import {pack} from 'msgpackr'
 import {RtcDriverClient} from "@Lib/client/drivers/RtcDriverClient";
 import webrtcConfig from "@/be/webrtcConfig";
@@ -60,7 +60,7 @@ export default new Vuex.Store({
       ns.addContainer('police', new SimpleContainer())
       ns.on(ALIAS.EVENT_SYNC, (event) => {
         console.log('event.message', event.message);
-        if (event.message[KEYWORDS.meta] || event.message[KEYWORDS.containers] || event.message[KEYWORDS.deletes]) {
+        if (event.message[INDICES.meta] || event.message[INDICES.containers] || event.message[INDICES.deletes]) {
           // We received some state update, let's pretend that if NewSync was not used, we would get full update
           const fakeState = {}
           for (const k in event.state) {
