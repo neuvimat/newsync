@@ -1,5 +1,5 @@
 import {pack, unpack} from 'msgpackr'
-import {KEYWORDS} from "@Lib/shared/SYMBOLS";
+import {INDICES, KEYWORDS} from "@Lib/shared/SYMBOLS";
 import {cloneDeep} from "lodash";
 import {byteSize} from "@Lib/format.mjs";
 
@@ -23,18 +23,18 @@ export class MessageInfoModel {
   /** @returns {{jsonNoDict, noDict, final, json}} */
   analyzeRawMessage(rawMessage) {
     const tmp = unpack(new Uint8Array(rawMessage))
-    if (tmp[KEYWORDS.containers]) {
-      for (let c in tmp[KEYWORDS.containers]) {
-        tmp[KEYWORDS.containers][c] = unpack(tmp[KEYWORDS.containers][c])
+    if (tmp[INDICES.containers]) {
+      for (let c in tmp[INDICES.containers]) {
+        tmp[INDICES.containers][c] = unpack(tmp[INDICES.containers][c])
       }
     }
     const message = this.dictionary.restoreObject(tmp)
     this.message = message
 
     const msgpackNoDictionary = cloneDeep(message)
-    if (msgpackNoDictionary[KEYWORDS.containers]) {
-      for (let c in msgpackNoDictionary[KEYWORDS.containers]) {
-        msgpackNoDictionary[KEYWORDS.containers][c] = pack(msgpackNoDictionary[KEYWORDS.containers][c])
+    if (msgpackNoDictionary[INDICES.containers]) {
+      for (let c in msgpackNoDictionary[INDICES.containers]) {
+        msgpackNoDictionary[INDICES.containers][c] = pack(msgpackNoDictionary[INDICES.containers][c])
       }
     }
 

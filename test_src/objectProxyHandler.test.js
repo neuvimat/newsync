@@ -40,12 +40,14 @@ describe('Basic tests:', () => {
     c.proxy.b = 15
     c.proxy.c = {a: 10, b: 15, c: 22}
     c.propagateChanges()
+    c.clear()
 
     delete c.proxy.a
     c.propagateChanges()
     assert(isEmpty(c.merges), '`Merges` is not empty!')
     assert(c.deletes['*'], 'Array for key deletion (`*`) is missing!')
     assert(c.deletes['*'].indexOf('a') !== -1, 'Key to be deleted (`a`) is not present!')
+    c.clear()
 
     delete c.proxy.b
     delete c.proxy.c.a
@@ -61,6 +63,7 @@ describe('Basic tests:', () => {
   it('Deletes mid-chain are compressed', () => {
     c.proxy.a = {b: {c: {d: {e: {}}}}}
     c.propagateChanges()
+    c.clear()
 
     delete c.proxy.a.b.c.d.e
     delete c.proxy.a.b.c.d
@@ -80,6 +83,7 @@ describe('Basic tests:', () => {
     assert(c.merges.a)
     assert(c.merges.b)
     assert(c.merges.b.a)
+    c.clear()
 
     c.proxy.b.x = 15
     c.proxy.d = 7
@@ -87,6 +91,7 @@ describe('Basic tests:', () => {
     assert(Object.keys(c.merges).length === 2)
     assert(c.merges.b.x = 15)
     assert(c.merges.d = 7)
+    c.clear()
 
     delete c.proxy.c.d.k
     delete c.proxy.b
@@ -96,20 +101,24 @@ describe('Basic tests:', () => {
     c.propagateChanges()
     assert(_.isEqual(c.merges, {aaa: 60, lol: {a: 40, b: 'String'}}))
     assert(_.isEqual(c.deletes, {'*': ['b', 'a'], c: {d: {'*': ['k']}}}))
+    c.clear()
 
     c.proxy.lol = c.proxy.xd
     c.propagateChanges()
     // We have to assert the serialized version, because lodash's deep equal seems to compare symbols as well
     // The state data (c.pristine || c.proxy) have special attributes attached to them in a form of symbols
     assert(_.isEqual(JSON.stringify(c.merges), JSON.stringify({lol: c.pristine.xd})))
+    c.clear()
 
     c.proxy.xd.p = 5
     c.propagateChanges()
     assert(_.isEqual(c.merges, {lol: {p: 5}, xd: {p: 5}}))
+    c.clear()
 
     delete c.proxy.xd
     c.propagateChanges()
     assert(_.isEqual(c.deletes, {'*': ['xd']}))
+    c.clear()
 
     c.proxy.lol.p = 6
     c.propagateChanges()
@@ -120,10 +129,12 @@ describe('Basic tests:', () => {
     c.proxy.a = {one: 1, two: 2}
     c.proxy.b = c.proxy.a
     c.propagateChanges()
+    c.clear()
 
     c.proxy.a.three = 3
     c.propagateChanges()
     assert(_.isEqual(c.merges, {a: {three: 3}, b: {three: 3}}))
+    c.clear()
 
     delete c.proxy.b
     c.proxy.a.four = 4
@@ -135,14 +146,17 @@ describe('Basic tests:', () => {
     c.proxy.a = {one: 1, two: 2}
     c.proxy.b = c.proxy.a
     c.propagateChanges()
+    c.clear()
 
     delete c.proxy.a.one
     c.propagateChanges()
     assert(_.isEqual(c.deletes, {a: {'*': ['one']}, b: {'*': ['one']}}))
+    c.clear()
 
     delete c.proxy.a
     c.propagateChanges()
     assert(_.isEqual(c.deletes, {'*': ['a']}))
+    c.clear()
 
     delete c.proxy.b.two
     c.propagateChanges()

@@ -9,6 +9,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "buildBe": "webpack --config ./webpack.back.config.js",
     "be": "node bin/be",
     "formatTest": "node perftest/nodeMain.mjs",
     "formatTestLimited": "node perftest/nodeMainLimited.mjs",

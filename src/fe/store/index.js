@@ -115,7 +115,7 @@ export default new Vuex.Store({
       ns.addContainer('police', new SimpleContainer())
       ns.on(ALIAS.EVENT_SYNC, (event) => {
         console.log('event.message', event.message);
-        if (event.message[KEYWORDS.meta] || event.message[KEYWORDS.containers] || event.message[KEYWORDS.deletes]) {
+        if (event.message[INDICES.meta] || event.message[INDICES.containers] || event.message[INDICES.deletes]) {
           // We received some state update, let's pretend that if NewSync was not used, we would get full update
           const fakeState = {}
           for (const k in event.state) {
@@ -123,16 +123,6 @@ export default new Vuex.Store({
           }
           state.lengthFullJson += tEncoder.encode(JSON.stringify(fakeState)).length
           state.lengthFullMsgpack += pack(fakeState).length
-
-          if (state.lengthFullJson > 52428800 && !logged) {
-            logged = true
-            console.log('state.lengthFullJson', state.lengthFullJson);
-            console.log('state.lengthFullMsgpack', state.lengthFullMsgpack);
-            console.log('state.lengthJson', state.lengthJson);
-            console.log('state.lengthJsonNoDict', state.lengthJsonNoDict);
-            console.log('state.lengthMsgPack', state.lengthMsgPack);
-            console.log('state.lengthMsgPackNoDict', state.lengthMsgPackNoDict);
-          }
         }
       })
       state.containers = {}
