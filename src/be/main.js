@@ -18,9 +18,13 @@ import {Ambulance} from "@/be/model/ambulance";
 import {SimulationRunner} from "@/be/simulation/SimulationRunner";
 import {PoliceSimulationRunner} from "@/be/simulation/PoliceSimulationRunner";
 import {ObjectContainer} from "@Lib/shared/containers/ObjectContainer";
+import {SYMBOLS} from "@Lib/shared/SYMBOLS";
 
 const port = Number(process.argv[2]) || 8080
-const commType = Number(process.argv[3]) || 2
+const commType = Number(process.argv[3]) || 1
+
+console.log('Running on port: ', port);
+console.log('Using comm type:', commType, ' (1 = WS, 2 = WRTC)');
 
 // Create the server and socket.io
 const [server, io, wss] = createServer(port); // Express and socket.io boilerplate
@@ -122,11 +126,11 @@ if (commType === 2) {
 // ============= GENERAL SETUP
 // =============================
 
-const container = newSync.addContainer('health', new ObjectContainer())
+const health = newSync.addContainer('health', new ObjectContainer())
 const police = newSync.addContainer('police', new ObjectContainer())
 
 newSync.enableAutoSync()
-const ambulanceRunner = new SimulationRunner(container.proxy, 100, 600)
+const ambulanceRunner = new SimulationRunner(health.proxy, 100, 600)
 const policeRunner = new PoliceSimulationRunner(police.proxy, 8, 125)
 
 newSync.on('sendAmbulance', (client, id, lon, lat) => {
