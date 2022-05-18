@@ -131,7 +131,7 @@ export default new Vuex.Store({
       Vue.set(state.containers, 'health', ns.containers.health.pristine)
       Vue.set(state.containers, 'police', ns.containers.police.pristine)
 
-      ios = io(process.env.VUE_APP_BE)
+      ios = io(process.env.VUE_APP_BE, {transports: ['polling']})
 
       ios.on("connect", () => {
         // Do nothing, sever will automatically respond by sending and RTC offer

@@ -8,13 +8,19 @@ import {WebSocketServer} from "ws";
 
 let server;
 
-export default function makeServer(_port) {
+export default function makeServer(_port, commType) {
   let port = normalizePort(process.env.PORT || _port || '3000');
   app.set('port', port);
+  let io = null
+  let wss = null
 
   server = http.createServer(app);
-  const io = new Server(server)
-  const wss = new WebSocketServer({server: server})
+  if (commType === 2) {
+    io = new Server(server)
+  }
+  else {
+    wss = new WebSocketServer({server: server})
+  }
 
   server.on('error', onError);
   server.on('listening', onListening);
