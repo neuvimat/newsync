@@ -41,7 +41,7 @@ describe('Basic tests:', () => {
     c.proxy.c = {a: 10, b: 15, c: 22}
     c.propagateChanges()
     c.clear()
-    assert(isEmpty(c.merges), '`Merges` is not empty!')
+
 
     delete c.proxy.a
     c.propagateChanges()
