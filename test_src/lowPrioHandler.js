@@ -21,7 +21,7 @@ beforeEach(() => {
 })
 
 describe('Basic tests:', () => {
-  it('Low prio changes are in container', () => {
+  it('Low prio changes return new message if supported', () => {
     container.pristine.a = 15
 
     assert(container.pristine.a === 15)
