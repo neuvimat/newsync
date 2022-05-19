@@ -1,6 +1,6 @@
 import {LongKeyDictionaryServer} from "@Lib/shared/LongKeyDictionaryServer";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
-import {ObjectContainer} from "@Lib/shared/containers/ObjectContainer";
+import {ObjectContainer} from "@Lib/shared/container/ObjectContainer";
 import {SimulationRunner} from "@/be/simulation/SimulationRunner";
 import {PoliceSimulationRunner} from "@/be/simulation/PoliceSimulationRunner";
 import {NewSyncServer} from "@Lib/server/NewSyncServer";

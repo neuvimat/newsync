@@ -4,13 +4,13 @@ import {NewSyncClient} from "@Lib/client/NewSyncClient";
 import {WebSocketDriverClient} from "@Lib/client/drivers/WebSocketDriverClient";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 import {LongKeyDictionaryClient} from "@Lib/shared/LongKeyDictionaryClient";
-import {SimpleContainer} from "@Lib/client/container/SimpleContainer";
 import {ALIAS} from "@Lib/shared/ALIAS";
 import {MessageInfoModel} from "@/fe/models/MessageInfoModel";
 import {INDICES} from "@Lib/shared/SYMBOLS";
 import {pack} from 'msgpackr'
 import {RtcDriverClient} from "@Lib/client/drivers/RtcDriverClient";
 import webrtcConfig from "@/be/webrtcConfig";
+import {ObjectContainer} from "@Lib/shared/container/ObjectContainer";
 
 Vue.use(Vuex)
 
@@ -50,8 +50,8 @@ export default new Vuex.Store({
         reject = _reject
       })
       const ns = new NewSyncClient(new WebSocketDriverClient(''), new MessagePackCoder(), new LongKeyDictionaryClient())
-      ns.addContainer('health', new SimpleContainer())
-      ns.addContainer('police', new SimpleContainer())
+      ns.addContainer('health', new ObjectContainer())
+      ns.addContainer('police', new ObjectContainer())
       ns.on(ALIAS.EVENT_SYNC, (event) => {
         console.log('event.message', event.message);
         if (event.message[INDICES.meta] || event.message[INDICES.containers] || event.message[INDICES.deletes]) {

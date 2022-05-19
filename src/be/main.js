@@ -13,7 +13,7 @@ import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
 import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
 import {SimulationRunner} from "@/be/simulation/SimulationRunner";
 import {PoliceSimulationRunner} from "@/be/simulation/PoliceSimulationRunner";
-import {ObjectContainer} from "@Lib/shared/containers/ObjectContainer";
+import {ObjectContainer} from "@Lib/shared/container/ObjectContainer";
 
 const port = Number(process.argv[2]) || 8080
 const commType = Number(process.argv[3]) || 1

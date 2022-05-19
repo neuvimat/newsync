@@ -1,5 +1,5 @@
 // import * as assert from "assert";
-import {ObjectContainer} from "@Lib/shared/containers/ObjectContainer";
+import {ObjectContainer} from "@Lib/shared/container/ObjectContainer";
 import {isEmpty} from "@Lib/objUtil";
 import assert from "assert";
 import * as _ from 'lodash'
