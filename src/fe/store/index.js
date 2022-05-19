@@ -96,7 +96,7 @@ export default new Vuex.Store({
       }
       return promise
     },
-    connectRtc({state}) {
+    connectRtc({state}, {url}) {
       let reject, resolve, promise;
       promise = new Promise((_resolve, _reject) => {
         resolve = _resolve
@@ -105,8 +105,8 @@ export default new Vuex.Store({
 
       // Prepare the new Sync and Vue frontend
       const ns = new NewSyncClient(new RtcDriverClient(), new MessagePackCoder(), new LongKeyDictionaryClient())
-      ns.addContainer('health', new SimpleContainer())
-      ns.addContainer('police', new SimpleContainer())
+      ns.addContainer('health', new ObjectContainer())
+      ns.addContainer('police', new ObjectContainer())
       ns.on(ALIAS.EVENT_SYNC, (event) => {
         console.log('event.message', event.message);
         if (event.message[INDICES.meta] || event.message[INDICES.containers] || event.message[INDICES.deletes]) {
@@ -125,7 +125,7 @@ export default new Vuex.Store({
       Vue.set(state.containers, 'health', ns.containers.health.pristine)
       Vue.set(state.containers, 'police', ns.containers.police.pristine)
 
-      ios = io(process.env.VUE_APP_BE, {transports: ['polling']})
+      ios = io(url, {transports: ['polling']})
 
       ios.on("connect", () => {
         // Do nothing, sever will automatically respond by sending and RTC offer
@@ -153,6 +153,7 @@ export default new Vuex.Store({
             event.channel.send('x') // ping the server that the channel is open due to wrtc node.js bug
           }
           else if (event.channel.label === 'NewSync') {
+            resolve()
             ns.setConnection(peerConnection, event.channel)
           }
           event.channel.binaryType = 'arraybuffer'

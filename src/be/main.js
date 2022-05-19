@@ -122,7 +122,8 @@ if (commType === 2) {
 const health = newSync.addContainer('health', new ObjectContainer())
 const police = newSync.addContainer('police', new ObjectContainer())
 
-newSync.enableAutoSync(1000) // Sync every 1000ms
+// Sync every 1000ms
+newSync.enableAutoSync(1000)
 
 // The runners will alter the state when asked to with 'iterate' method.
 // They will also create some basic random data based on the parameters in constructor
@@ -150,6 +151,7 @@ newSync.on('stopAll', (client) => {
   ambulanceRunner.stopAll()
 })
 
+// Car refers to police vehicle
 newSync.on('sendCar', (client, id, lon, lat) => {
   policeRunner.moveCarTarget(id, [Number(lon), Number(lat)])
 })

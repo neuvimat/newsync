@@ -10,14 +10,13 @@
             <select v-model="connectionType">
               <option value="0">Websocket</option>
               <option value="1">WebRTC</option>
-              <!--        <option value="2" disabled>socket.io</option>-->
             </select>
           </legend>
-          <div v-if="connectionType === 0">
+          <div v-if="connectionType === '0'">
             <label>Websocket URL:<br/><input v-model="websocketUrl" type="text"></label>
           </div>
-          <div v-if="connectionType === 1">
-            <label>Signalling server URL:<br/><input v-model="signalUrl" type="text"></label>
+          <div v-if="connectionType === '1'">
+            <label>Signalling socket.io server URL:<br/><input v-model="signalUrl" type="text"></label>
           </div>
         </fieldset>
         <button @click="connect">Connect</button>
@@ -58,23 +57,16 @@
 </template>
 
 <script>
-import {pack} from 'msgpackr'
 import MessageInfo from "@/fe/components/MessageInfo";
-import {MessageInfoModel} from "@/fe/models/MessageInfoModel";
 import {LongKeyDictionaryServer} from "@Lib/server/LongKeyDictionaryServer";
-import {cloneDeep} from "lodash";
-import Vue from "vue";
 import ObjectTest from "@/fe/components/ObjectTest";
-import {merge} from "@Lib/objUtil";
-
-const dic = new LongKeyDictionaryServer()
 
 export default {
   name: 'HomeView',
   data() {
     return {
-      connectionType: 0,
-      signalUrl: '',
+      connectionType: '0',
+      signalUrl: 'http://localhost:8080',
       websocketUrl: 'ws://localhost:8080',
       setup: 0,
     }
@@ -104,7 +96,7 @@ export default {
           })
       }
       else if (Number(this.connectionType) === 1) {
-        this.$store.dispatch('connectRtc', {})
+        this.$store.dispatch('connectRtc', {url: this.signalUrl})
           .then(() => {
             this.setup = 2
             this.$store.state.ready = true
