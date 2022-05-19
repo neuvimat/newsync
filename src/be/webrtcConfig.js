@@ -1,3 +1,6 @@
+/**
+ * Just a simple config that makes use of freely accessible Google STUN server.
+ */
 export default  {
   iceServers: [
     {

@@ -1,8 +1,11 @@
 import {pack, unpack} from 'msgpackr'
 import {INDICES, KEYWORDS} from "@Lib/shared/SYMBOLS";
 import {cloneDeep} from "lodash";
-import {byteSize} from "@Lib/format.mjs";
 
+/**
+ * This model represents a message received from the NewSync framework. It also has a responsibility to calculate
+ * the message size for many possible variants of the message's formats.
+ */
 export class MessageInfoModel {
   static encoder = new TextEncoder()
   static decoder = new TextDecoder()

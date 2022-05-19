@@ -225,6 +225,8 @@ However, the FE part does not feature developer commentary for the Vue UI part a
 within the framework. However, there are comments at the `store/index.js` file which hosts most of the required logic to
 make a NewSync FE app.
 
+For the BE part, have a look at the file located at `src/be/vue.js`.
+
 ## Running the app
 
 First produce the server (backend) side application code with this command:

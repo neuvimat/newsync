@@ -3,31 +3,27 @@
 import createServer from './createServer'
 import rtc from "wrtc";
 import rtcConfig from './webrtcConfig'
-import {proxyKey} from "@Lib/shared/SimpleProxy";
 
-import {createSimulation} from "./model/CreateSimulation";
 import {NewSyncServer} from "@Lib/server/NewSyncServer";
-import {SimpleContainer} from "@Lib/client/container/SimpleContainer";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 
 import 'source-map-support/register'
 import {LongKeyDictionaryServer} from "@Lib/shared/LongKeyDictionaryServer";
 import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
 import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
-import {Ambulance} from "@/be/model/ambulance";
 import {SimulationRunner} from "@/be/simulation/SimulationRunner";
 import {PoliceSimulationRunner} from "@/be/simulation/PoliceSimulationRunner";
 import {ObjectContainer} from "@Lib/shared/containers/ObjectContainer";
-import {SYMBOLS} from "@Lib/shared/SYMBOLS";
 
 const port = Number(process.argv[2]) || 8080
-const commType = Number(process.argv[3]) || 2
+const commType = Number(process.argv[3]) || 1
 
 console.log('Running on port: ', port);
 console.log('Using comm type:', commType, ' (1 = WS, 2 = WRTC)');
 
-// Create the server and socket.io
+// Create the http server, wss server and socket.io instance
 const [server, io, wss] = createServer(port, commType); // Express and socket.io boilerplate
+
 /** @type {NewSyncServer} **/
 let newSync = null
 const dict = new LongKeyDictionaryServer()
@@ -42,7 +38,6 @@ if (commType === 1) {
 
   wss.on('connection', (socket, request) => {
     const client = newSync.addClient(socket)
-    // newSync.fullUpdate(client)
 
     socket.on('message', (message, isBinary) => {
       if (isBinary && newSync.handleIfFrameworkMessage(message, client)) {return}
@@ -52,7 +47,6 @@ if (commType === 1) {
     socket.on('close', () => {
       newSync.removeClient(client)
     })
-
 
     socket.on('error', (error) => {
       newSync.removeClient(client)
@@ -73,9 +67,7 @@ if (commType === 2) {
 
     dc.onopen = ev => {
       client = newSync.addClient(peerConnection, dc)
-      newSync.on('custom2', (a, b, c) => {
-        console.log('Received event custom2', a, b, c);
-      })
+
       newSync.setCustomMessageHandler((message) => {
         console.log('Handling a custom message in any way client deems worth', message);
       })
@@ -126,13 +118,19 @@ if (commType === 2) {
 // ============= GENERAL SETUP
 // =============================
 
+// Create the containers
 const health = newSync.addContainer('health', new ObjectContainer())
 const police = newSync.addContainer('police', new ObjectContainer())
 
-newSync.enableAutoSync()
+newSync.enableAutoSync(1000) // Sync every 1000ms
+
+// The runners will alter the state when asked to with 'iterate' method.
+// They will also create some basic random data based on the parameters in constructor
 const ambulanceRunner = new SimulationRunner(health.proxy, 100, 600)
 const policeRunner = new PoliceSimulationRunner(police.proxy, 8, 125)
 
+
+// Define reactions to FE events (events as in NewSync terminology, but they serve as requests)
 newSync.on('sendAmbulance', (client, id, lon, lat) => {
   ambulanceRunner.moveAmbulanceTarget(id, [Number(lon), Number(lat)])
 })
@@ -171,6 +169,7 @@ newSync.on('stopAllCars', (client) => {
   policeRunner.stopAll()
 })
 
+// Periodically alter the simulation
 setInterval(() => {
   ambulanceRunner.iterate()
   policeRunner.iterate()

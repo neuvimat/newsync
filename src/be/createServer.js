@@ -15,11 +15,11 @@ export default function makeServer(_port, commType) {
   let wss = null
 
   server = http.createServer(app);
-  if (commType === 2) {
-    io = new Server(server)
+  if (commType === 1) {
+    wss = new WebSocketServer({server: server})
   }
   else {
-    wss = new WebSocketServer({server: server})
+    io = new Server(server)
   }
 
   server.on('error', onError);

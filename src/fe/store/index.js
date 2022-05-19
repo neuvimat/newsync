@@ -18,8 +18,6 @@ const tEncoder = new TextEncoder()
 
 let ws = null
 let ios = null
-let wrtc = null
-let logged = false
 
 export default new Vuex.Store({
   state: {
@@ -28,6 +26,7 @@ export default new Vuex.Store({
     containers: {},
     ready: false,
 
+    // Statistics
     messagesReceived: 0,
     lengthFullJson: 0,
     lengthFullMsgpack: 0,
