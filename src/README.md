@@ -228,11 +228,14 @@ make a NewSync FE app.
 For the BE part, have a look at the file located at `src/be/vue.js`.
 
 ## Running the app
+**Breaking news:** with the most recent update to this repository, it is now experimentally possible to access the Vue application
+directly under `/vue` on the BE part without a need for dedicated serving server for Vue! However, results may vary as it
+was not properly tested yet.
 
-First produce the server (backend) side application code with this command:
+First compile/transpile the application code with this command:
 
 ```
-npm run buildBe
+npm run build
 ```
 
 Then you can run the backend part of the application with this command:
@@ -251,6 +254,9 @@ npm run serve
 
 The serve command will start a dedicated server whose only purpose is to serve the built Vue frontend. it automatically
 scans the 8080 port and runs on it, unless in is already in use, after which it scans for port 8081 and so forth.
+
+**Please note** that the `npm run serve` command automatically reloads the Vue application when any changes are detected
+without the need to constantly rebuild the app.
 
 ### Config
 
@@ -277,7 +283,7 @@ node bin/be.js 3000 2 // will start the application at port 3000 in WebRTC mode
 ## Vue frontend vs Express
 
 The BE server has the ability to serve static HTML. In the ideal world, it would serve the Vue app (currently, we use
-the Vue development server for that). However, it still serves some HTML that is located at ```be/views```. In that
+the Vue development server for that) (direct Vue serving is only experimental at this time). However, it still serves some HTML that is located at ```be/views```. In that
 folder, there are some ```.twig``` files. The BE also has the ability to serve various tests. See the readme.md in the
 ```perftest``` folder for more details.
 
@@ -300,4 +306,11 @@ npm run watchBack
 
 This will run Webpack in watch mode. It will react to any change of the source files and automatically recompile them.
 After that, a ```nodemon``` plugin inside Webpack will automatically relaunch the Node.js server. Keep in mind that the
-plugin will always launch the application on port 8080! Make sure it is not in use prior.
+plugin will always launch the application on port 8080! Make sure the port is not in any prior use.
+
+### For the complete development experience, use these commands
+```
+npm run watchBack   // Keep rebuilding and restarting the BE
+npm run watchFront  // Keep rebuilding any static JS that should be served from the Express framework on BE
+npm run server      // Keep rebuilding and hot reloading the Vue app
+```

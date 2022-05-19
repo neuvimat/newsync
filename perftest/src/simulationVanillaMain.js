@@ -1,4 +1,4 @@
-import {SimulationRunner} from "@/be/simulation/SimulationRunner";
+import {HealthSimulationRunner} from "@/be/simulation/SimulationRunner";
 import {PoliceSimulationRunner} from "@/be/simulation/PoliceSimulationRunner";
 import * as t from '../lib/Library.mjs'
 import 'source-map-support/register'
@@ -21,7 +21,7 @@ let localResultsPacks = []
 const ambulanceState = {}
 const policeState = {}
 
-const ambulanceRunner = new SimulationRunner(ambulanceState, 100, 600)
+const ambulanceRunner = new HealthSimulationRunner(ambulanceState, 100, 600)
 const policeRunner = new PoliceSimulationRunner(policeState, 8, 125)
 
 for (let i = 0; i < MOVING_AMBULANCES; i++) {

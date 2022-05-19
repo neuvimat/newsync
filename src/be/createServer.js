@@ -3,8 +3,10 @@ import {app} from "./app";
 import {Server} from 'socket.io'
 import {WebSocketServer} from "ws";
 
-// More boilerplate code to make the http server and socket.io run
-// Returns the http server and socket io
+/**
+ * More boilerplate code to make the http server, ws server and socket.io run.
+ * Returns the http server, ws server or socket io, depending on commType.
+ */
 
 let server;
 
@@ -18,8 +20,11 @@ export default function makeServer(_port, commType) {
   if (commType === 1) {
     wss = new WebSocketServer({server: server})
   }
-  else {
+  else if (commType === 2) {
     io = new Server(server)
+  }
+  else {
+    throw new Error('No acceptable communication type specified! Use either 1 (for websocket) or 2 (for WRTC)')
   }
 
   server.on('error', onError);

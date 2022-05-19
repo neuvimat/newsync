@@ -21,9 +21,8 @@ Please refer to the `/src/readme.md` file.
 It is possible to access an HTML page defined inside the `/views` folder at these URLs:
 ```
 /           - index.twig
-/pg         - pg.twig
-/vis        - vis.twig
-/test/:file - runs a file present at /perftest/browserTests (.mjs suffix required) via script.twig file
+/test/:file - sends an html file that has :file from perftest/browserTests injected into it. Url '/test/charcode' will 
+            - run browser based test within that file (the .mjs suffix is added automatically)
                     
 /perf       - perftest.twig
 /perftest   - perftest.twig

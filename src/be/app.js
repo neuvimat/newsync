@@ -7,9 +7,10 @@ import logger from "morgan";
 import twig from "twig";
 import indexRouter from "./routes/index";
 
-// Nothing but Express boilerplate here
-// Sets up the app and injects all the basic express stuff
-// Also injects routes/index
+/**
+ * Nothing but Express boilerplate here.
+ * Sets up the app and injects all the basic Express stuff, such as router, render engine, static file serving, ...
+ */
 
 export let app = express();
 
@@ -22,10 +23,9 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, '../dist')));
+app.use('/', indexRouter);
 app.use('/script',express.static(path.join(__dirname, '../perftest/')));
 app.use(express.static(path.join(__dirname, '../dist')));
-
-app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

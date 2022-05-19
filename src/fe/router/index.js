@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SimulationView from "@/fe/views/SimulationView";
-import AboutView from '@/fe/views/AboutView'
 import MapView from "@/fe/views/MapView";
 import DataStats from "@/fe/views/DataStats";
 import store from '@/fe/store/'
@@ -14,11 +13,6 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: AboutView
   },
   {
     path: '/sim',
@@ -41,6 +35,9 @@ const router = new VueRouter({
   routes
 })
 
+/**
+ * Guard that disallows to navigate anywhere in the app until the user is connected to the NewSync server.
+ */
 router.beforeEach(async (to, from, next) => {
   if (!store.state.ready && to.name !== 'home') {
     next('/')

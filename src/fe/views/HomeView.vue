@@ -58,7 +58,6 @@
 
 <script>
 import MessageInfo from "@/fe/components/MessageInfo";
-import {LongKeyDictionaryServer} from "@Lib/server/LongKeyDictionaryServer";
 import ObjectTest from "@/fe/components/ObjectTest";
 
 export default {

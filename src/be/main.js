@@ -11,7 +11,7 @@ import 'source-map-support/register'
 import {LongKeyDictionaryServer} from "@Lib/server/LongKeyDictionaryServer";
 import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
 import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
-import {SimulationRunner} from "@/be/simulation/SimulationRunner";
+import {HealthSimulationRunner} from "@/be/simulation/SimulationRunner";
 import {PoliceSimulationRunner} from "@/be/simulation/PoliceSimulationRunner";
 import {ObjectContainer} from "@Lib/shared/container/ObjectContainer";
 
@@ -127,7 +127,7 @@ newSync.enableAutoSync(1000)
 
 // The runners will alter the state when asked to with 'iterate' method.
 // They will also create some basic random data based on the parameters in constructor
-const ambulanceRunner = new SimulationRunner(health.proxy, 100, 600)
+const ambulanceRunner = new HealthSimulationRunner(health.proxy, 100, 600)
 const policeRunner = new PoliceSimulationRunner(police.proxy, 8, 125)
 
 

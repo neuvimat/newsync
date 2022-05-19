@@ -11,6 +11,6 @@ module.exports = {
       .set("@", path.join(__dirname, "./src"))
       .set("@Lib", path.join(__dirname, "./lib"))
       .set("@FE", path.join(__dirname, "./src/fe"))
-      .set('@BE', path.join(__dirname, "./src/be"))
+      .set('@BE', path.join(__dirname, "./src/be"));
   }
 };

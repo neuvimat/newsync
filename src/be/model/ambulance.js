@@ -1,3 +1,6 @@
+/**
+ * Ambulance model
+ */
 export class Ambulance {
   static make(id, sign, lat, lon, hospital) {
     return {id, sign, pos: {lat, lon}, hospital}

@@ -12,9 +12,6 @@
 
 <script>
 import MessageInfo from "@/fe/components/MessageInfo";
-import {pack} from "msgpackr";
-import {MessageInfoModel} from "@/fe/models/MessageInfoModel";
-import {FakeLongKeyDictionary} from "@Lib/shared/FakeLongKeyDictionary";
 
 export default {
   name: "Messages",

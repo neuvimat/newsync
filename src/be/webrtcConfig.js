@@ -1,5 +1,5 @@
 /**
- * Just a simple config that makes use of freely accessible Google STUN server.
+ * Just a simple config for WRTC that makes use of freely accessible Google STUN server.
  */
 export default  {
   iceServers: [

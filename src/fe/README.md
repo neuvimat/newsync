@@ -21,12 +21,12 @@ the `sendEvent` method inside `actions` to send a message to the BE.
 Please refer to the `/src/readme.md` file.
 
 ## Note
-All the other top level files (`main.js`, `MainPlayground.js`, `MainVis.js`) are at the current time obsolete. They
-are used either for quick testing or were used as the main FE part of the demo before the Vue app was made.
+The top level file `main.js` is at the current time obsolete. It is currently used for
+for quick testing of code that needs to be transpiled to be run in the browser, as the Webpack input is already specified
+for this file. Before the Vue app it used to be the entry point for the FE part.
 
-It is possible to access an HTML page where the JS code is ran at these URLs:
+
+It is possible to access an HTML page where the JS code is ran at this URL:
 ```
 /    - main.js
-/pg  - MainPlayground.js
-/vis - MainVis.js
 ```

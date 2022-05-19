@@ -1,7 +1,7 @@
 import {LongKeyDictionaryServer} from "@Lib/server/LongKeyDictionaryServer";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 import {ObjectContainer} from "@Lib/shared/container/ObjectContainer";
-import {SimulationRunner} from "@/be/simulation/SimulationRunner";
+import {HealthSimulationRunner} from "@/be/simulation/SimulationRunner";
 import {PoliceSimulationRunner} from "@/be/simulation/PoliceSimulationRunner";
 import {NewSyncServer} from "@Lib/server/NewSyncServer";
 import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
@@ -28,7 +28,7 @@ const newSync = new NewSyncServer(new RtcDriverServer(), new MessagePackCoder(),
 const container = newSync.addContainer('health', new ObjectContainer())
 const police = newSync.addContainer('police', new ObjectContainer())
 
-const ambulanceRunner = new SimulationRunner(container.proxy, 100, 600)
+const ambulanceRunner = new HealthSimulationRunner(container.proxy, 100, 600)
 const policeRunner = new PoliceSimulationRunner(police.proxy, 8, 125)
 
 // Disable the 'welcome' message send to clients when added

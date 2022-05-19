@@ -1,11 +1,11 @@
-import {createSimulation, createSimulationPolice} from "@/be/model/CreateSimulation";
-import {TargetAmbulanceMover} from "@/be/simulation/TargetAmbulanceMover";
-import {RandomAmbulanceMover} from "@/be/simulation/RandomAmbulanceMover";
+import {createSimulationPolice} from "@/be/model/CreateSimulation";
+
 import {TargetPoliceMover} from "@/be/simulation/TargetPoliceMover";
 import {RandomCarMover} from "@/be/simulation/RandomCarMover";
 
 /**
- * Yes, this class is a filthy copy paste of {@link SimulationRunner} with just slightly altered state definitions
+ * Yes, this class is a filthy copy and paste of {@link HealthSimulationRunner} with just slightly altered state definitions.
+ * Look at the linked class for more details.
  */
 export class PoliceSimulationRunner {
   state

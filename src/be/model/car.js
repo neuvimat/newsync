@@ -1,3 +1,6 @@
+/**
+ * Police vehicle model
+ */
 export class Car {
   static make(id, sign, type, lat, lon, station) {
     return {id, sign, type, pos: {lat, lon}, station}
