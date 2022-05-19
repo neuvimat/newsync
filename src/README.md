@@ -15,21 +15,11 @@ some examples of usage on both the client and server side.
 
 This section serves as a quick overview and minimal examples to make your application harness the power of NewSync.
 
-## Basic concepts
-
-### NewSync
-
-### Driver
-
-### MessageCoder
-
-### LongKeyDictionary
-
-### Containers
+To see all the events that can be listened to or the possible variants of drivers, etc. have a look at the reamde.md in `/lib` folder.
 
 ## Server side examples
 
-Setting up the basic server boilerplate:
+### Setting up the basic server boilerplate
 
 ```javascript
 // Initial setup
@@ -44,21 +34,26 @@ const state = container.proxy // shortcut to the automatic change detecting refe
 state.myObject = {a: 10, b: 20}
 
 // Create regular changes
+// All changes made to the container via the 'proxy' field will trigger automatic detection
 setInterval(() => {state.myObject.a = Math.random()}, 2500)
 
 // Sync every 500ms
 newSyncServer.enableAutoSync(500)
 ```
 
+### Hooking up to existing connection
+
 In order to allow maximum possible flexibility for the network connections, it's the developer's responsibility to tell
 NewSync when a viable connection is established. For example, you may want to use WebSocket for other prior data
 transfer and only start data synchronization after the user is properly verified or when the user explicitly asks.
 
-Hooking up WebSocketServer connection for the framework (this code expects that you use the ```ws``` NPM package):
+This code expects that you use the ```ws``` NPM package.
 
 ```javascript
 const httpServer // HTTP server setup omitted
 const wss = new WebSocketServer(httpServer)
+const newSyncServer = new newSyncServer(driver, coder, dictionary)
+
 wss.on('connection', (socket) => {
   // Use the returned client handle for any NewSync operations that require specification of a client.
   const client = newSyncServer.addClient(socket)
@@ -79,7 +74,148 @@ wss.on('connection', (socket) => {
 })
 ```
 
-### Client side examples
+### Low priority messages
+If you use a connection that supports low priority messages (WRCT for instance), you create low priority changes like this:
+```javascript
+import {SYMBOLS} from '@Lib/shared/SYMBOLS' // location for the demo app file structure
+const container = NewSync.addContainer('myContainer', new ObjectContainer())
+
+// Access the special low priority handler via symbol 'sLow' that is exported in SYMBOLS object
+container.proxy[SYMBOLS.sLow].set('key', 'value').set('another key', 10) // Allows to chain the set(key, value) method
+```
+If you make low priority changes for a connection that does not support them, they will be automatically merged to regular
+synchronization message.
+
+Low priority changes can only be in the nature of the set() method (i.e. no deletes or state tracking is enabled).
+
+### Custom messages
+You can also send custom events or messages from server to client and vice versa.
+
+Sending custom messages/events:
+```javascript
+// NewSync setup omitted for brevity
+let newSync;
+const someClient; // a client connected to NewSync framework
+
+// Events are specified by event name and any number of arguments of any type
+// Send the event immediately
+newSync.sendEventAll('eventName', arg1, arg2, ...) // Broadcast event
+newSync.sendEvent(someClient, 'eventName', arg1, arg2, ...) // Send an event to specific client
+
+// Store the event in a queue that will be transmitted together with the synchronization message 
+newSync.scheduleEventAll('eventName', arg1, arg2, ...) // Broadcast event
+newSync.schedulesendEvent(someClient, 'eventName', arg1, arg2, ...) // Send an event to specific client
+
+// Message is a singular object of any structure
+newSync.sendMessageAll({field: 40})
+newSync.sendMessage(someClient, {value: 15})
+
+// Store the message in a queue that will be transmitted together with the synchronization message 
+newSync.scheduleMessageAll('eventName', arg1, arg2, ...) // Broadcast event
+newSync.schedulesendMessage(someClient, 'eventName', arg1, arg2, ...) // Send an event to specific client
+```
+
+Reacting to custom messages/events:
+```javascript
+// NewSync setup omitted for brevity
+let newSync;
+const someClient; // a client connected to NewSync framework
+
+// Listen to event by its name. First argument is always the client from whom the event originated.
+newSync.on('eventName', (client, arg1, arg2, ...) => { ...any code here }) 
+
+// Register a handler for message. First argument is alrays the client from whom the message originated.
+newSync.onmessage = (client, message) => { ...any code here}  
+newSync.setCustomMessageHandler((client, message) => { ...any code here}) // Alternative way to set the custom handler  
+```
+
+### Manual changes detection
+To skip the automatic detection and speedup the application quite significantly you can bypass it and edit the container
+state directly via the ```pristine``` field on the container. Note that any changes made like this need to be marked
+manually.
+
+There are three main fields for marking changes: `merges`, `deletes` and `meta`. 'Merges' is a simple object of keys and values,
+however `deletes` and `meta` are not, and you should not alter them manually without using utility methods on the container.
+
+```javascript
+const container = NewSync.addContainer('myContainer', new ObjectContainer())
+container.pristine.myField = 40 // Make the change itself
+container.merges.myField = 40 // Mark it manually
+
+// Alternatively, you can use the utility methods provided on the container instance
+container.set('myField', 40)
+container.set('myNestedObject.someField', 15)
+container.delete('path.to.key')
+```
+
+## Client side examples
+### Basic setup
+```javascript
+import {COMMANDS} from "@Lib/shared/COMMANDS";
+import {ClientCommandFactory} from "@Lib/client/commands/ClientCommandFactory";
+
+const ns = new NewSyncClient(new WebSocketDriverClient(''), new MessagePackCoder(), new LongKeyDictionaryClient())
+ns.addContainer('health', new SimpleContainer())
+ns.addContainer('police', new SimpleContainer())
+ns.on(ALIAS.EVENT_SYNC, (event) => {
+  // React to receiving a new NewSync message
+  // Access the decoded message via event.message
+  console.log('event.message', event.message);
+})
+
+ws = new WebSocket('ws://localhost:8080')
+ws.onopen = () => {
+    ns.setConnection(ws)
+    ns.sendCommand(ClientCommandFactory.SUBSCRIBE_ALL()) // Subscribe to all containers after connecting
+    ns.sendCommand(ClientCommandFactory.SUBSCRIBE_CONTAINER('someContainer')) // Subscribe to a specific container
+  }
+    
+  ws.onmessage = (msg) => {
+  if (ns.handleIfFrameworkMessage(msg.data)) {
+    // Alternatively you can react to receiving a new message here, but note
+    // that the msg.data is in binary format
+  }
+  else {
+    // Not a NewSync message, your own code here
+  }
+}
+```
+
+### Custom messages
+You can also send custom events or messages from client to server and vice versa.
+
+Sending custom messages/events:
+```javascript
+// NewSync setup omitted for brevity
+let newSyncClient;
+
+// Events are specified by event name and any number of arguments of any type
+// Send the event immediately
+newSync.sendEvent('eventName', arg1, arg2, ...) // Broadcast event
+
+// Store the event in a queue that will be transmitted together with the synchronization message 
+newSync.scheduleEvent('eventName', arg1, arg2, ...) // Broadcast event
+
+// Message is a singular object of any structure
+newSync.sendMessage({field: 40})
+
+// Store the message in a queue that will be transmitted together with the synchronization message 
+newSync.scheduleMessage('eventName', arg1, arg2, ...) // Broadcast event
+```
+
+Reacting to custom messages/events:
+```javascript
+// NewSync setup omitted for brevity
+let newSync;
+const someClient; // a client connected to NewSync framework
+
+// Listen to event by its name. Since this is a client version, no client is passed to the listener.
+newSync.on('eventName', (arg1, arg2, ...) => { ...any code here }) 
+
+// Register a handler for message. Since this is a client version, no client is passed to the listener.
+newSync.onmessage = (message) => { ...any code here}  
+newSync.setCustomMessageHandler((message) => { ...any code here}) // Alternative way to set the custom handler  
+```
 
 ## Documentation
 
