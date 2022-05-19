@@ -5,7 +5,7 @@ import assert from "assert";
 import * as _ from 'lodash'
 import {INDICES, SYMBOLS} from "@Lib/shared/SYMBOLS";
 import {NewSyncServer} from "@Lib/server/NewSyncServer";
-import {LongKeyDictionaryServer} from "@Lib/shared/LongKeyDictionaryServer";
+import {LongKeyDictionaryServer} from "@Lib/server/LongKeyDictionaryServer";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
 

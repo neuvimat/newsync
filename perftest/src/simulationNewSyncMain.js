@@ -1,4 +1,4 @@
-import {LongKeyDictionaryServer} from "@Lib/shared/LongKeyDictionaryServer";
+import {LongKeyDictionaryServer} from "@Lib/server/LongKeyDictionaryServer";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 import {ObjectContainer} from "@Lib/shared/container/ObjectContainer";
 import {SimulationRunner} from "@/be/simulation/SimulationRunner";

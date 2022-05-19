@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import {NewSyncClient} from "@Lib/client/NewSyncClient";
 import {WebSocketDriverClient} from "@Lib/client/drivers/WebSocketDriverClient";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
-import {LongKeyDictionaryClient} from "@Lib/shared/LongKeyDictionaryClient";
+import {LongKeyDictionaryClient} from "@Lib/client/LongKeyDictionaryClient";
 import {ALIAS} from "@Lib/shared/ALIAS";
 import {MessageInfoModel} from "@/fe/models/MessageInfoModel";
 import {INDICES} from "@Lib/shared/SYMBOLS";

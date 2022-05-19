@@ -8,7 +8,7 @@ import {NewSyncServer} from "@Lib/server/NewSyncServer";
 import {MessagePackCoder} from "@Lib/shared/coder/MessagePackCoder";
 
 import 'source-map-support/register'
-import {LongKeyDictionaryServer} from "@Lib/shared/LongKeyDictionaryServer";
+import {LongKeyDictionaryServer} from "@Lib/server/LongKeyDictionaryServer";
 import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
 import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
 import {SimulationRunner} from "@/be/simulation/SimulationRunner";
