@@ -5,7 +5,7 @@ import {HealthSimulationRunner} from "@/be/simulation/SimulationRunner";
 import {PoliceSimulationRunner} from "@/be/simulation/PoliceSimulationRunner";
 import {NewSyncServer} from "@Lib/server/NewSyncServer";
 import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
-import {clear, isEmpty} from "@Lib/objUtil";
+import {clear, isEmpty} from "@Lib/util/objUtil";
 import {promises} from 'fs'
 import 'source-map-support/register'
 

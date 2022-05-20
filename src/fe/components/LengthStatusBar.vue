@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {byteSize} from "@Lib/format.mjs";
+import {byteSize} from "@Lib/../../../lib/util/format";
 
 export default {
   name: "LengthStatusBar",

@@ -6,7 +6,7 @@
 import * as tester from './lib/performTestNode.mjs'
 import generateObject from "./lib/bigObjectGenerator.js";
 import _ from 'lodash'
-import {byteSize} from "../lib/format.mjs";
+import {byteSize} from "@Lib/util/format.mjs";
 
 import {promises} from 'fs'
 

@@ -1,6 +1,6 @@
 // import * as assert from "assert";
 import {ObjectContainer} from "@Lib/shared/container/ObjectContainer";
-import {applyMeta, isEmpty} from "@Lib/objUtil";
+import {applyMeta, isEmpty} from "@Lib/util/objUtil";
 import assert from "assert";
 import * as _ from 'lodash'
 import {INDICES, SYMBOLS} from "@Lib/shared/SYMBOLS";

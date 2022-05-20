@@ -6,7 +6,7 @@
 
 import * as tester from './lib/performTestBrowser.js'
 import generateObject from "./lib/bigObjectGenerator.js";
-import {byteSize} from "../lib/format.mjs";
+import {byteSize} from "@Lib/util/format.mjs";
 
 // BSON
 import * as bson from 'bson'

@@ -1,5 +1,5 @@
 import {Hospital} from "./hospital";
-import {Random} from "@Lib/random";
+import {Random} from "@Lib/util/random";
 import {Ambulance} from "./ambulance";
 import {Car} from "@/be/model/car";
 import {Station} from "@/be/model/station";

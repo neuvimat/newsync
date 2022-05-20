@@ -13,7 +13,7 @@
 
 <script>
 import {MessageInfoModel} from "@/fe/models/MessageInfoModel";
-import {formatTime} from "@Lib/format.mjs";
+import {formatTime} from "@Lib/../../../lib/util/format";
 import JsonView from "@/fe/components/JsonView";
 
 export default {

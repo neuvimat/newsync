@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {merge} from "@Lib/objUtil";
+import {merge} from "@Lib/util/objUtil";
 
 export default {
   name: "ObjectTest",

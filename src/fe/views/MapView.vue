@@ -41,7 +41,7 @@ import carMarker from '@/assets/map-police.png'
 import { Icon } from 'leaflet';
 import LengthStatusBar from "@/fe/components/LengthStatusBar";
 import Messages from "@/fe/components/Messages";
-import {isEmpty} from "@Lib/objUtil";
+import {isEmpty} from "@Lib/util/objUtil";
 import ModalInfoBox from "@/fe/components/ModalInfoBox";
 
 delete Icon.Default.prototype._getIconUrl;
