@@ -66,6 +66,8 @@ export default new Vuex.Store({
       })
       state.containers = {}
 
+      ns.onmessage = (msg)=>{console.log('msg',msg);}
+
       Vue.set(state, 'newSync', ns)
       Vue.set(state.containers, 'health', ns.containers.health.pristine)
       Vue.set(state.containers, 'police', ns.containers.police.pristine)
