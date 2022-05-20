@@ -1,5 +1,5 @@
 /**
- * This is just a library file for nodeMain.mjs
+ * This is just a library file for nodeMain.mjs [crafted for Node.js usage]
  */
 
 import {performance} from 'perf_hooks'

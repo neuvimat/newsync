@@ -1,5 +1,5 @@
 /**
- * This is just a library file for browserMain.mjs
+ * This is just a library file for browserMain.mjs [crafted for browser usage]
  */
 
 import _ from "lodash";

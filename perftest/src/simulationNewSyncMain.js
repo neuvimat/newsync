@@ -47,20 +47,22 @@ for (let i = 0; i < EXECUTIONS; i++) {
 }
 
 function doTest() {
-  const start = performance.now()
-
   localResultsTotal = []
   localResultsDelta = []
   localResultsPacks = []
 
+  const start = performance.now()
+
   for (let j = 0; j < ITERATIONS; j++) {
     simulateIteration()
   }
+
+  const duration = performance.now() - start
+
   resultsTotal = resultsTotal.concat([localResultsTotal])
   resultsDelta = resultsDelta.concat([localResultsDelta])
   resultsPacks = resultsPacks.concat([localResultsPacks])
 
-  const duration = performance.now() - start
   console.log(`Duration: ${duration} ms`);
 }
 
@@ -88,6 +90,8 @@ function simulateIteration() {
   localResultsPacks.push(t3-t2)
   localResultsDelta.push(t2-t1)
 }
+
+// Create the text file
 
 let string = ''
 let tmp = []

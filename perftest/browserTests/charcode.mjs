@@ -1,3 +1,8 @@
+/**
+ * Prints all characters with charchode between 40 to 100 000 and records their size and if they are printable in JSON
+ * format.
+ */
+
 let intro = document.createElement('div');
 intro.innerText = 'Generating report, it may take up to a few seconds...'
 document.body.append(intro)

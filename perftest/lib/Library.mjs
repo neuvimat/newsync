@@ -1,3 +1,7 @@
+/**
+ * Library that allows to define tests, pre-warm the VM, record how long the tests took and write the results in a file.
+ */
+
 import {promises as fs} from 'fs'
 
 let _results = []
