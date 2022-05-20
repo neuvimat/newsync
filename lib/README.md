@@ -5,6 +5,18 @@ minimize data transfers.
 
 **Note:** to see usage examples, refer to the readme.md inside the `/src` (demo app) folder.
 
+## Documentation
+Some classes may seem to not be documented. It is because their interface is documented and so
+the class inherits the docs from the interface!
+
+If you are using any JetBrains IDE, you may invoke the inherited documentation by selecting
+the method and pressing CTRL+Q (default hotkey).
+
+Alternatively, you build the docs by running `npm run docs`. This will create a top level folder `docs` with the
+generated HTML documentation. However, there are some limitations to that, as the build tool is not
+always able to correctly link the individual components. The quick inspect feature in JetBrains IDE usually understands
+the links better than the generated docs.
+
 ## Components overview
 Below are listed the main key components:
 ### NewSync instance
