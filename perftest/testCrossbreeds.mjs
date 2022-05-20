@@ -6,7 +6,7 @@
 import msgpack from "msgpack";
 import * as msgpackr from "msgpackr";
 import _ from "lodash";
-import generateObject from "../lib/bigObjectGenerator.js";
+import generateObject from "./lib/bigObjectGenerator.js";
 import * as msgpacklite from 'msgpack-lite'
 
 const small = generateObject(10, 20, 4, 10)
