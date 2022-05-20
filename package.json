@@ -11,6 +11,7 @@
     "build": "vue-cli-service build && webpack --config ./webpack.back.config.js && webpack --config ./webpack.front.config.js && webpack --config ./webpack.test.config.js && webpack --config ./webpack.perftest.config.js",
     "buildBe": "webpack --config ./webpack.back.config.js",
     "be": "node bin/be",
+    "docs": "jsdoc -c conf.json -r -d docs",
     "formatTest": "node perftest/nodeMain.mjs",
     "formatTestLimited": "node perftest/nodeMainLimited.mjs",
     "start": "node bin/be",
@@ -74,6 +75,7 @@
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "http-errors": "^2.0.0",
+    "jsdoc": "^3.6.10",
     "nodemon-webpack-plugin": "^4.7.1",
     "source-map-loader": "^3.0.1",
     "vue-template-compiler": "^2.6.14"

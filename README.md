@@ -23,6 +23,13 @@ It is designed to be easily integrable into existing applications with relative 
 source files are inside the `/lib` folder. To see examples on how to use it, have a look at the demo application. Its
 code is in the `src` folder.
 
+### Documentation
+The documentation for NewSync (`/lib` folder) can be generated into an HTML file by running:
+```
+npm run docs
+```
+The resulting documentation will be available at `/docs`.
+
 ## Instructions
 Each of the main folders (`/lib`, `/src` and `/perftest`) have their own readme.md file that contains specific 
 instructions for that part. It also features documentation, such as how to integrate the NewSync framework into your

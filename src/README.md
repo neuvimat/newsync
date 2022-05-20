@@ -143,6 +143,7 @@ container.pristine.myField = 40 // Make the change itself
 container.merges.myField = 40 // Mark it manually
 
 // Alternatively, you can use the utility methods provided on the container instance
+// (And must use it for delete)
 container.set('myField', 40)
 container.set('myNestedObject.someField', 15)
 container.delete('path.to.key')

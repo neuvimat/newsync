@@ -73,7 +73,7 @@ function simulateIteration() {
 
   const client = newSync.clients['1']
   const t2 = performance.now()
-  const message = newSync.getChangesMessage(client)
+  const message = newSync.getSynchronizationMessage(client)
   const data = newSync.coder.pack(message)
   const t3 = performance.now()
 

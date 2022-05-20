@@ -1,0 +1,19 @@
+{
+  "sourceType": "module",
+  "recurseDepth": 10,
+  "source": {
+    "include": ["lib/"],
+    "exclude": [],
+    "includePattern": ".+\\.(js(doc|x)?|mjs)$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc"]
+  },
+  "templates": {
+    "cleverLinks": true,
+    "monospaceLinks": false
+  }
+}
+

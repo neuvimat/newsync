@@ -1,4 +1,5 @@
 import 'source-map-support/register'
+import {ObjectContainer} from "@Lib/shared/container/ObjectContainer";
 
 /**
  * This file is meant for quick testing in the Node.js environment if you use ESM imports. It is already setup with
