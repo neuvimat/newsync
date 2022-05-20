@@ -6,13 +6,15 @@ The basic folder strucutre is as folows:
 ```
 /bin      - transpiled files meant to be used in Node.js
             the scratchPad.js is a quick way to test any Node.js code that is us using ESM imports (needs transpilation)
-/dist     - transpiled FE files meant to be run in the browser and served via BE 
+/dist     - transpiled FE files meant to be run in the browser and served via BE
+/docs     - generated HTML documentation
 /lib      - source code for the NewSync framework
 /perftest - variety of source files containing performance tests to be run in Node.js or in browser (served by BE)
 /src      - source files for the demo application, contains both FE and BE part
 /test     - transpiled test possible to be ran via mocha runner
 /test_src - mocha runner cannot run ESM imports by default, so Webpack transpiles the tests here to be usable in Mocha
 ```
+**Note:** some of these folders may not exist until the application is built.
 
 ## NewSync
 NewSync is a framework that helps with automatic synchronization of simulation state represented in-memory with JS
