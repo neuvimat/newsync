@@ -1,5 +1,6 @@
 import {clampAbs} from "@Lib/util/math";
 import {Ambulance} from "@/be/model/ambulance";
+import {Car} from "@/be/model/car";
 
 export class RandomAmbulanceMover {
   constructor(ambulanceId) {
@@ -9,7 +10,7 @@ export class RandomAmbulanceMover {
   iterate(state, delta, simRunner) {
     const a = state.cars[this.ambulanceId]
     if (a) {
-      Ambulance.moveAmbulance(a)
+      Car.moveCar(a)
     }
   }
 }

@@ -7,7 +7,7 @@ export class Ambulance {
   }
 
   static moveAmbulance(ambulance) {
-    ambulance.pos.lat += (3 + Math.random()) / 4000;
-    ambulance.pos.lon += (3 + Math.random()) / 4000;
+    ambulance.pos.lat += (Math.random() - 0.5) / 1000;
+    ambulance.pos.lon += (Math.random() - 0.5) / 1000;
   }
 }

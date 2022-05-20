@@ -7,7 +7,7 @@ export class Car {
   }
 
   static moveCar(car) {
-    car.pos.lat += (3 + Math.random()) / 4000;
-    car.pos.lon += (3 + Math.random()) / 4000;
+    car.pos.lat += (Math.random() - 0.5) / 1000;
+    car.pos.lon += (Math.random() - 0.5) / 1000;
   }
 }

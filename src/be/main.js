@@ -11,7 +11,7 @@ import 'source-map-support/register'
 import {LongKeyDictionaryServer} from "@Lib/server/LongKeyDictionaryServer";
 import {RtcDriverServer} from "@Lib/server/drivers/RtcDriverServer";
 import {WebSocketDriverServer} from "@Lib/server/drivers/WebSocketDriverServer";
-import {HealthSimulationRunner} from "@/be/simulation/SimulationRunner";
+import {HealthSimulationRunner} from "@/be/simulation/HealthSimulationRunner";
 import {PoliceSimulationRunner} from "@/be/simulation/PoliceSimulationRunner";
 import {ObjectContainer} from "@Lib/shared/container/ObjectContainer";
 
