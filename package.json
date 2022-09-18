@@ -8,7 +8,8 @@
   },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build && webpack --config ./webpack.back.config.js && webpack --config ./webpack.front.config.js && webpack --config ./webpack.test.config.js && webpack --config ./webpack.perftest.config.js",
+    "buildFull": "vue-cli-service build && webpack --config ./webpack.back.config.js && webpack --config ./webpack.front.config.js && webpack --config ./webpack.test.config.js && webpack --config ./webpack.perftest.config.js",
+    "build": "vue-cli-service build && webpack --config ./webpack.back.config.js && webpack --config ./webpack.front.config.js && webpack --config ./webpack.test.config.js",
     "buildBe": "webpack --config ./webpack.back.config.js",
     "be": "node bin/be",
     "docs": "jsdoc -c conf.json -r -d docs",
