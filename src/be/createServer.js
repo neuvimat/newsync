@@ -9,10 +9,11 @@ import {WebSocketServer} from "ws";
  */
 
 let server;
+let port;
 
-export default function makeServer(_port, commType) {
-  let port = normalizePort(process.env.PORT || _port || '3000');
-  app.set('port', port);
+export default function makeServer(_port, commType) {;
+  port = _port
+  app.set('port',_port);
   let io = null
   let wss = null
 
@@ -31,22 +32,6 @@ export default function makeServer(_port, commType) {
   server.on('listening', onListening);
 
   return [server, io, wss]
-}
-
-function normalizePort(val) {
-  let port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
 }
 
 function onError(error) {

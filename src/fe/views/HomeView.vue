@@ -9,7 +9,7 @@
           <legend>
             <select v-model="connectionType">
               <option value="0">Websocket</option>
-              <option value="1">WebRTC</option>
+              <option value="1" disabled="disabled">WebRTC</option>
             </select>
           </legend>
           <div v-if="connectionType === '0'">
@@ -66,7 +66,7 @@ export default {
     return {
       connectionType: '0',
       signalUrl: 'http://localhost:8080',
-      websocketUrl: 'ws://localhost:8080',
+      websocketUrl: process.env.VUE_APP_WS,
       setup: 0,
     }
   },

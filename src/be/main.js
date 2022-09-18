@@ -15,8 +15,14 @@ import {HealthSimulationRunner} from "@/be/simulation/HealthSimulationRunner";
 import {PoliceSimulationRunner} from "@/be/simulation/PoliceSimulationRunner";
 import {ObjectContainer} from "@Lib/shared/container/ObjectContainer";
 
-const port = Number(process.argv[2]) || 8080
-const commType = Number(process.argv[3]) || 1
+import {config} from "dotenv";
+import path from "path";
+
+config({path: path.resolve(__dirname, '..', 'src', 'be','.env.local')})
+config({path: path.resolve(__dirname, '..', 'src', 'be','.env')})
+
+const port = Number(process.env.PORT) || 8080
+const commType = Number(process.env.COMM_TYPE) || 1
 
 console.log('Running on port: ', port);
 console.log('Using comm type:', commType, ' (1 = WS, 2 = WRTC)');
@@ -178,4 +184,4 @@ setInterval(() => {
 }, 333)
 
 // Start the server
-server.listen(8080);
+server.listen(port);
