@@ -13,6 +13,6 @@ module.exports = {
       .set("@FE", path.join(__dirname, "./src/fe"))
       .set('@BE', path.join(__dirname, "./src/be"))
       .end();
-    config.output.publicPath(process.env.VUE_APP_PUBLIC_PATH)
-  }
+  },
+  publicPath: process.env.VUE_APP_PUBLIC_PATH
 };
