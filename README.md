@@ -1,9 +1,10 @@
-# Diploma thesis - Differential data updates
-
+# Master's thesis - Differential data updates
 ## Overview
+**Demo available at [https://digistruct.cz/newsync](https://digistruct.cz/newsync)**
 
-This repository contains the whole codebase of the NewSync framework, demo application, performance tests and units
-tests.
+This repository was created for my work on Newsync framework for my Master's thesis: [Differential data updates (DSpace)](https://dspace.cvut.cz/handle/10467/87656), [thesis text (available only in Czech)](https://dspace.cvut.cz/bitstream/handle/10467/87656/F3-BP-2020-Neuvirt-Matyas-synchronizace_distribuovaneho_stavu.pdf?sequence=-1&isAllowed=y).
+
+It contains the whole codebase of the NewSync framework, demo application, performance tests and some units tests.
 
 The basic folder structure is as follows:
 
@@ -30,8 +31,6 @@ differential updates.
 It is designed to be easily integrable into existing applications with relative ease. All the source files are inside
 the `/lib` folder. To see examples on how to use it, have a look at the demo application. Its code is in the `src`
 folder.
-
-**Demo available at [https://digistruct.cz/newsync](https://digistruct.cz/newsync)**
 
 ### Documentation
 
