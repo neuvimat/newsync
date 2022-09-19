@@ -1,5 +1,5 @@
 {
-  "browserslist": ["last 2 versions"],
+  "browserslist": ["last 2 versions", "not ie 11", "not dead"],
   "name": "diplom",
   "version": "1.0.0",
   "private": true,
